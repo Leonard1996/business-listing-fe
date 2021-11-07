@@ -1,0 +1,13 @@
+.container__quote {
+  display: flex;
+  & > div {
+    padding: 0.5rem;
+  }
+
+  & div:nth-child(2) {
+    margin-top: 1rem;
+  }
+  & div:nth-child(3) {
+    align-self: flex-end;
+  }
+}

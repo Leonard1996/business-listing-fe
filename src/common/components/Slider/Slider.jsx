@@ -30,8 +30,8 @@ export default function Slider() {
       <Grid item xs={12}>
         <Carousel responsive={responsive} infinite={true}>
           {posts.map((post, _index) => (
-            <div className={styles["container"]}>
-              <PostCard key={_index} />
+            <div className={styles["container"]} key={_index}>
+              <PostCard />
             </div>
           ))}
         </Carousel>

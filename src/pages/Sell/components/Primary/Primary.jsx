@@ -4,7 +4,7 @@ import styles from "./Primary.module.scss";
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import shine from "../../../assets/images/shine.svg";
+import shine from "../../../../assets/images/shine.svg";
 
 export default function Primary() {
   const isSmallScreen = useMediaQuery("(max-width:600px)");
