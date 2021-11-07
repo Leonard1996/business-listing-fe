@@ -110,6 +110,7 @@ export default function Footer() {
                 },
                 "& .MuiOutlinedInput-root": {
                   background: "#DDD!important",
+                  marginBottom: "3rem",
                   "& fieldset": {
                     borderColor: "black",
                   },

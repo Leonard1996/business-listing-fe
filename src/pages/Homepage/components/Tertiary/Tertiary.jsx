@@ -61,28 +61,30 @@ export default function Tertiary() {
       </Grid>
       <Grid item xs={12}>
         <Box marginTop={3} marginBottom={5} sx={{ textAlign: isSmallScreen ? "center" : "right", padding: "0 2rem" }}>
-          <TextField
-            size="small"
-            placeholder="Search"
-            sx={{
-              "& label.Mui-focused": {
-                color: "black",
-              },
-              "& .MuiInput-underline:after": {
-                borderBottomColor: "black",
-              },
-              "& .MuiOutlinedInput-root": {
-                background: "#DDD!important",
-                "& fieldset": {
-                  borderColor: "black",
+          <form>
+            <TextField
+              size="small"
+              placeholder="Search"
+              sx={{
+                "& label.Mui-focused": {
+                  color: "black",
                 },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "black",
+                },
+                "& .MuiOutlinedInput-root": {
+                  background: "#DDD!important",
+                  "& fieldset": {
+                    borderColor: "black",
+                  },
 
-                "&.Mui-focused fieldset": {
-                  borderColor: "black",
+                  "&.Mui-focused fieldset": {
+                    borderColor: "black",
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          </form>
         </Box>
       </Grid>
     </Grid>

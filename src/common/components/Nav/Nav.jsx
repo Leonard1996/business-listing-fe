@@ -16,12 +16,17 @@ export default function Nav() {
     boxShadow: "none",
     padding: "10px 0px",
   };
+
+  const iconStyle = {
+    fill: trigger ? "black" : "white",
+  };
+
   return (
     <AppBar sx={style} elevation={0}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h5">Logo</Typography>
         <div>
-          <MenuIcon />
+          <MenuIcon sx={iconStyle} />
         </div>
       </Toolbar>
     </AppBar>
