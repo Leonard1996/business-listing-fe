@@ -1,0 +1,20 @@
+.container {
+  margin: 2rem 0;
+  &__options {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+  }
+}
+
+.card {
+  &__button {
+    background-color: #d4ae36 !important;
+    color: black !important;
+    padding: 0.6rem 1.2rem !important;
+    &:hover {
+      background-color: black !important;
+      color: white !important;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.icon-container {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.description {
+  width: 250px;
+  margin: 0 auto;
+}
+
+.card-container {
+  margin: 2rem 0;
+}
+
+.card {
+  &__button {
+    background-color: #d4ae36 !important;
+    color: black !important;
+    padding: 0.6rem 2.2rem !important;
+    &:hover {
+      background-color: black !important;
+      color: white !important;
+    }
+  }
+}

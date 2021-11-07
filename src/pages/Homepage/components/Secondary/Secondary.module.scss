@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+  &__main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__secondary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    div {
+      background-color: #01b779;
+      margin-left: 1px;
+    }
+    &--last {
+      background: linear-gradient(to right, #01b779 50%, #dcdce5 50%) !important;
+    }
+  }
+}
+
+.card {
+  &__button {
+    background-color: #d4ae36 !important;
+    color: black !important;
+    padding: 0.6rem 2.2rem !important;
+    &:hover {
+      background-color: black !important;
+      color: white !important;
+    }
+  }
+}
