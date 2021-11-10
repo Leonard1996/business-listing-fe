@@ -11,14 +11,14 @@ export default function Nav() {
 
   const style = {
     backgroundColor: trigger ? "white" : "transparent",
-    color: trigger ? "black" : "black",
+    color: "black",
     transition: trigger ? "0.3s" : "0.5s",
     boxShadow: "none",
     padding: "10px 0px",
   };
 
   const iconStyle = {
-    fill: trigger ? "black" : "white",
+    fill: "black",
   };
 
   return (

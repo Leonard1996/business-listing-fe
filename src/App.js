@@ -11,6 +11,7 @@ import Footer from "./common/components/Footer/Footer";
 import Evaluation from "./pages/Evaluation/Evaluation";
 import Grow from "./pages/Grow/Grow";
 import Sell from "./pages/Sell/Sell";
+import Authenticate from "./pages/Authenticate/Authenticate";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/evaluation" component={Evaluation} />
         <Route path="/grow" component={Grow} />
         <Route path="/sell" component={Sell} />
+        <Route path="/authenticate" component={Authenticate} />
         <Redirect to="/" />
       </Switch>
       <Footer />
