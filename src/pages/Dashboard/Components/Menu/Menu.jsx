@@ -9,7 +9,10 @@ import StarBorder from "@mui/icons-material/StarBorder";
 import Divider from "@mui/material/Divider";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 
-export default function Menu({ handleClick, open, handleClickSecondary, openSecondary }) {
+export default function Menu({ handleClick, open, handleClickSecondary, openSecondary, history }) {
+  const handleRedirectClick = (route) => {
+    history.push("/dashboard/" + route);
+  };
   return (
     <List
       sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
@@ -22,13 +25,13 @@ export default function Menu({ handleClick, open, handleClickSecondary, openSeco
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton sx={{ pl: 4 }} onClick={() => handleRedirectClick("my-details")}>
             <ListItemIcon>
               <PersonOutlineIcon />
             </ListItemIcon>
-            <ListItemText primary="My details" />
+            <ListItemText primary="My details" onClick={handleRedirectClick} />
           </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton sx={{ pl: 4 }} onClick={() => handleRedirectClick("saved-businesses")}>
             <ListItemIcon>
               <StarBorder />
             </ListItemIcon>
@@ -43,12 +46,11 @@ export default function Menu({ handleClick, open, handleClickSecondary, openSeco
       </ListItemButton>
       <Collapse in={openSecondary} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton sx={{ pl: 4 }} onClick={() => handleRedirectClick("my-business")}>
             <ListItemIcon>
               <PersonOutlineIcon />
             </ListItemIcon>
-            {/* <ListItemText primary="My details" /> */}
-            <p>hello</p>
+            <p>my-business</p>
           </ListItemButton>
           <Divider variant="middle" />
         </List>

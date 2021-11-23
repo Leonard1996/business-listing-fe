@@ -14,7 +14,7 @@ import Sell from "./pages/Sell/Sell";
 import Authenticate from "./pages/Authenticate/Authenticate";
 import AuthProvider from "./context/Auth/Auth";
 import Login from "./pages/Authenticate/Login";
-import PrivateRoute from "./common/PrivateRoute/PrivateRoute";
+import PrivateRoute from "./common/components/PrivateRoute/PrivateRoute";
 import ActivateAccount from "./pages/ActivateAccount/ActivateAccount";
 import Dashboard from "./pages/Dashboard/Dashboard";
 

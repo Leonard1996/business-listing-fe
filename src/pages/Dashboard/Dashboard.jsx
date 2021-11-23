@@ -1,8 +1,10 @@
 import { Grid } from "@mui/material";
-import Menu from "./Components/Menu/Menu";
+import Menu from "./components/Menu/Menu";
 import React from "react";
+import PrivateRoute from "../../common/components/PrivateRoute/PrivateRoute";
+import MyDetails from "./components/MyDetails/MyDetails";
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const [open, setOpen] = React.useState(false);
   const [openSecondary, setOpenSecondary] = React.useState(false);
 
@@ -15,11 +17,18 @@ export default function Dashboard() {
           open={open}
           openSecondary={openSecondary}
           handleClickSecondary={() => setOpenSecondary(!openSecondary)}
+          {...props}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
-        hello 2
+        <PrivateRoute exact path={props.match.url + "/" + "my-details"} component={MyDetails} />
+        <PrivateRoute exact path={props.match.url + "/" + "saved-businesses"} component={test2} />
+        <PrivateRoute exact path={props.match.url + "/" + "my-business"} component={test3} />
       </Grid>
     </Grid>
   );
 }
+
+const test1 = () => <p>my-det</p>;
+const test2 = () => <p>saved</p>;
+const test3 = () => <p>my-bus</p>;

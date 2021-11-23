@@ -160,7 +160,7 @@ export default function Authentication(props) {
                   </Box>
                   <Box p={3} paddingBottom={0}>
                     <TextField
-                      type="tel"
+                      type="text"
                       label="Phone number"
                       variant="outlined"
                       fullWidth
