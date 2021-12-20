@@ -13,6 +13,7 @@ export default function Menu({ handleClick, open, handleClickSecondary, openSeco
   const handleRedirectClick = (route) => {
     history.push("/dashboard/" + route);
   };
+
   return (
     <List
       sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
@@ -29,7 +30,7 @@ export default function Menu({ handleClick, open, handleClickSecondary, openSeco
             <ListItemIcon>
               <PersonOutlineIcon />
             </ListItemIcon>
-            <ListItemText primary="My details" onClick={handleRedirectClick} />
+            <ListItemText primary="My details" />
           </ListItemButton>
           <ListItemButton sx={{ pl: 4 }} onClick={() => handleRedirectClick("saved-businesses")}>
             <ListItemIcon>
@@ -50,7 +51,7 @@ export default function Menu({ handleClick, open, handleClickSecondary, openSeco
             <ListItemIcon>
               <PersonOutlineIcon />
             </ListItemIcon>
-            <p>my-business</p>
+            <p>My-business</p>
           </ListItemButton>
           <Divider variant="middle" />
         </List>

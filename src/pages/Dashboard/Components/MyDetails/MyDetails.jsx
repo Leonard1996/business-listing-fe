@@ -1,6 +1,6 @@
 import { Typography, CircularProgress, TextField, Box, Button } from "@mui/material";
 import styles from "../../../Authenticate/Authenticate.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { inputSx } from "../../../Authenticate/Authenticate";
 import { fetchMe, changeMe } from "../../dashboard.service";
 import { schema } from "../../../../Validation/UpdateProfile";
@@ -8,7 +8,8 @@ import Notification from "../../../../common/components/Notification/Notificatio
 
 export default function MyDetails(props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [height, setHeight] = useState(0);
+  const firstTimeRef = useRef(0);
+  const secondTimeRef = useRef(0);
 
   const [inputs, setInputs] = useState({
     name: "",
@@ -34,7 +35,6 @@ export default function MyDetails(props) {
   const fetchProfile = async () => {
     const [me, error] = await fetchMe();
     if (error) {
-      console.log("error");
       setIsLoading(false);
       return;
     }
@@ -57,11 +57,18 @@ export default function MyDetails(props) {
   };
 
   useEffect(() => {
-    fetchProfile();
+    caches.keys().then((names) => {
+      names.forEach((name) => {
+        caches.delete(name);
+      });
+      fetchProfile();
+    });
+    //fetchProfile();
   }, []);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+
     const { name, surname, phoneNumber, newPassword, confirmPassword, email } = inputs;
     const formInput = {
       name,
@@ -82,7 +89,6 @@ export default function MyDetails(props) {
       .validate(formInput, options)
       .then(async () => {
         setIsLoading(true);
-        console.log(formInput);
         const [result, error] = await changeMe({ ...formInput, email });
         setIsLoading(false);
         if (error) {
@@ -120,11 +126,11 @@ export default function MyDetails(props) {
   return (
     <>
       {isLoading ? (
-        <div style={{ height: `${height}px`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ height: `100%`, display: "flex", alignItems: "center", justifyContent: "center" }}>
           <CircularProgress color="warning" />
         </div>
       ) : (
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit} autoComplete="off">
           <Box p={3} paddingBottom={0}>
             <TextField
               error={error.inputOrder === "1" ? true : false}
@@ -171,9 +177,9 @@ export default function MyDetails(props) {
               variant="outlined"
               fullWidth
               sx={inputSx}
-              value={inputs.phoneNumber ?? ""}
               onChange={handleInputChange}
               name="phoneNumber"
+              value={inputs.phoneNumber}
             />
           </Box>
           <Box p={3} paddingBottom={0}>
@@ -185,9 +191,14 @@ export default function MyDetails(props) {
               variant="outlined"
               fullWidth
               sx={inputSx}
-              value={inputs.newPassword.length ? inputs.newPassword : ""}
               onChange={handleInputChange}
               name="newPassword"
+              inputProps={{
+                autoComplete: "newPassword",
+                form: {
+                  autoComplete: "off",
+                },
+              }}
             />
           </Box>
           <Box p={3} paddingBottom={0}>
@@ -201,7 +212,12 @@ export default function MyDetails(props) {
               sx={inputSx}
               onChange={handleInputChange}
               name="confirmPassword"
-              value={inputs.confirmPassword.length ? inputs.confirmPassword : ""}
+              inputProps={{
+                autoComplete: "confirmPassword",
+                form: {
+                  autoComplete: "off",
+                },
+              }}
             />
           </Box>
           <Box p={3} sx={{ textAlign: "center" }}>

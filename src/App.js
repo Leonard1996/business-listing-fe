@@ -17,26 +17,37 @@ import Login from "./pages/Authenticate/Login";
 import PrivateRoute from "./common/components/PrivateRoute/PrivateRoute";
 import ActivateAccount from "./pages/ActivateAccount/ActivateAccount";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    warning: {
+      main: '#d4ae36',
+    },
+  },
+});
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Nav />
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-          <Route path="/evaluation" component={Evaluation} />
-          <Route path="/grow" component={Grow} />
-          <Route path="/sell" component={Sell} />
-          <Route path="/signup" component={Authenticate} />
-          <Route path="/signin" component={Login} />
-          <Route path="/verify/:token" component={ActivateAccount} />
-          <PrivateRoute path="/dashboard" component={Dashboard} />
-          <Redirect to="/" />
-        </Switch>
-        <Footer />
-      </Router>
-    </AuthProvider>
+    <ThemeProvider theme={theme}>
+      <AuthProvider>
+        <Router>
+          <Nav />
+          <Switch>
+            <Route exact path="/" component={Homepage} />
+            <Route path="/evaluation" component={Evaluation} />
+            <Route path="/grow" component={Grow} />
+            <Route path="/sell" component={Sell} />
+            <Route path="/signup" component={Authenticate} />
+            <Route path="/signin" component={Login} />
+            <Route path="/verify/:token" component={ActivateAccount} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <Redirect to="/" />
+          </Switch>
+          <Footer />
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

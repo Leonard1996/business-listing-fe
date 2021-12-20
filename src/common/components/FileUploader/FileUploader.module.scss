@@ -1,0 +1,43 @@
+.container {
+  height: 150px;
+  display: flex;
+  border-radius: 40%;
+  border: 2px solid white;
+  align-items: center;
+  padding: 3rem;
+  &--separator {
+    height: 80%;
+    border: 1px solid white;
+    margin: 0 0 0 3rem;
+    @media screen and (max-width: 745px) and (min-width: 600px) {
+      border-color: transparent;
+    }
+  }
+  div {
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &__list {
+    margin: 0 auto;
+    overflow: auto;
+    height: 200px;
+  }
+  @media screen and (max-width: 745px) and (min-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  &__single {
+    margin: 0 auto;
+    overflow: auto;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
