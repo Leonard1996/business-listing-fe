@@ -5,7 +5,7 @@ import { Grid } from "@mui/material";
 import styles from "./Slider.module.scss";
 
 const posts = new Array(5).fill(true);
-const responsive = {
+export const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
     items: 5,

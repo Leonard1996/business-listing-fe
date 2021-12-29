@@ -9,9 +9,14 @@ export default function Footer() {
   return (
     <div className={styles["container"]}>
       <div className={styles["container__logo"]}>
-        <Typography variant="h2" sx={{ color: "white" }}>
+        {/* <Typography variant="h2" sx={{ color: "white" }}>
           Logo
-        </Typography>
+        </Typography> */}
+        <img
+          src={
+            "https://valhallainvestments.co.uk/wp-content/uploads/2019/09/Valhalla-Investment_Logo-Long_210x100-01.png"
+          }
+        />
       </div>
 
       <div className={styles["container__categories"]}>

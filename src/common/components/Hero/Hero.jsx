@@ -1,6 +1,13 @@
 import styles from "./Hero.module.scss";
 
 export default function Hero({ src }) {
-  const background = `lightblue url(${src}) no-repeat fixed center`;
-  return <div className={styles["container"]} styles={{ backgrounds: src ? background : null }}></div>;
+  const background = {
+    backgroundImage: `url("${src}")`,
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundAttachment: "scroll",
+    height: "500px",
+    backgroundSize: "cover",
+  };
+  return <div className={styles["container"]} style={{ ...(src && background) }}></div>;
 }

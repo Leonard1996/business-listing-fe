@@ -7,7 +7,11 @@ import Slider from "../../common/components/Slider/Slider";
 export default function Sell() {
   return (
     <>
-      <Hero />
+      <Hero
+        src={
+          "https://valhallainvestments.co.uk/wp-content/uploads/2020/06/Valhalhalla_Mergers-Acquisitions_1600x1120-1.jpg"
+        }
+      />
       <Primary />
       <Quote />
       <Tertiary />

@@ -18,6 +18,8 @@ import PrivateRoute from "./common/components/PrivateRoute/PrivateRoute";
 import ActivateAccount from "./pages/ActivateAccount/ActivateAccount";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Business from "./pages/Business/Business";
+import FilterForm from "./pages/FilterForm/FilterForm";
 
 const theme = createTheme({
   palette: {
@@ -39,8 +41,10 @@ function App() {
             <Route path="/grow" component={Grow} />
             <Route path="/sell" component={Sell} />
             <Route path="/signup" component={Authenticate} />
+            <Route path="/buy-businesses" component={FilterForm} />
             <Route path="/signin" component={Login} />
             <Route path="/verify/:token" component={ActivateAccount} />
+            <Route exact path="/businesses/:businessId" component={Business} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <Redirect to="/" />
           </Switch>

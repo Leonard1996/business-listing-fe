@@ -79,7 +79,7 @@ export default function Secondary() {
               </Grid>
               <Grid item xs={12} sm={7}>
                 <Box sx={{ textAlign: "center" }} my={3}>
-                  <img src="https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg" />
+                  <img src="https://valhallainvestments.co.uk/wp-content/uploads/2020/06/Valhalhalla_Services-Banner_1920x608.jpg" />
                 </Box>
               </Grid>
             </Grid>

@@ -9,7 +9,9 @@ export default function Grow() {
 
   return (
     <>
-      <Hero />
+      <Hero
+        src={"https://valhallainvestments.co.uk/wp-content/uploads/2020/06/Valhalhalla_Accountability_1600x1120.jpg"}
+      />
       <Grid container sx={{ margin: "3rem auto" }}>
         <Grid item xs={12}>
           <form>

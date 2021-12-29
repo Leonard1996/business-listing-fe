@@ -4,14 +4,14 @@ import SavedBusiness from "../SavedBusiness/SavedBusiness";
 import { listBusinesses } from "../../dashboard.service";
 import Pagination from "@mui/material/Pagination";
 
-export default function SavedBusinessList() {
+export default function SavedBusinessList({ hidden, isFilter, setFilterCount }) {
   const [businesses, setBusinesses] = React.useState([]);
   const [count, setCount] = React.useState(1);
   const [page, setPage] = React.useState(1);
   const [isLoading, setIsLoading] = React.useState(true);
 
   const callBusinessesService = async (page) => {
-    const [businesses, error] = await listBusinesses(page);
+    const [businesses, error] = await listBusinesses(page, isFilter);
     const {
       data: {
         data: {
@@ -23,6 +23,7 @@ export default function SavedBusinessList() {
     setBusinesses(pages);
     setCount(Math.ceil(total_count / limit));
     setIsLoading(false);
+    if (setFilterCount) setFilterCount(total_count);
   };
 
   React.useEffect(() => {
@@ -107,6 +108,8 @@ export default function SavedBusinessList() {
                       lastAnnualTurnover={lastAnnualTurnover}
                       lastAnnualProfit={lastAnnualProfit}
                       businessName={businessName}
+                      businessService={() => callBusinessesService(page)}
+                      hidden={hidden}
                     />
                   </Grid>
                 </React.Fragment>

@@ -30,7 +30,12 @@ const items = [
   { type: "text", label: "Number", name: "number" },
   { type: "number", label: "No. of Staff", name: "noOfStaff" },
   { type: "number", label: "No. of Shareholders", name: "noOfShareholders" },
-  { type: "select", label: "Relocatable", values: ["Yes", "No"], name: "relocatable" },
+  {
+    type: "select",
+    label: "Property",
+    values: ["Leasehold", "Freehold", "Relocatable", "Accomodation Included"],
+    name: "relocatable",
+  },
   { type: "select", label: "Owner Managed", values: ["Yes", "No"], name: "ownerManaged" },
   {
     type: "select",

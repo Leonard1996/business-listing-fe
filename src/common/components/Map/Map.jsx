@@ -15,7 +15,7 @@ class LocationSearchModal extends React.PureComponent {
     city: "",
     area: "",
     state: "",
-    zoom: 8,
+    zoom: 11,
     height: 400,
     mapPosition: {
       lat: 51.5072,

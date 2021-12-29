@@ -41,10 +41,21 @@ export const createBusiness = async (business) => {
   }
 };
 
-export const listBusinesses = async (page) => {
+export const listBusinesses = async (page, isFilter) => {
   try {
-    const businesses = await axiosApiInstance.get(process.env.REACT_APP_API + `/businesses?page=${page}`);
+    let query = process.env.REACT_APP_API + `/businesses?page=${page}`
+    if (isFilter) query += "&isFilter=1"
+    const businesses = await axiosApiInstance.get(query);
     return [businesses, null];
+  } catch (error) {
+    return [null, JSON.stringify(error)];
+  }
+};
+
+export const deleteBusiness = async (id) => {
+  try {
+    const business = await axiosApiInstance.delete(process.env.REACT_APP_API + `/businesses/` + id);
+    return [business, null];
   } catch (error) {
     return [null, JSON.stringify(error)];
   }
