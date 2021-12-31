@@ -1,10 +1,38 @@
-import { Grid, Typography, Box, useMediaQuery } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Box,
+  useMediaQuery,
+  TextField,
+  MenuItem,
+  FormControl,
+  Select,
+  InputLabel,
+  Button,
+  Checkbox,
+  FormLabel,
+} from "@mui/material";
 import React from "react";
 import SavedBusinessList from "../Dashboard/components/SavedBusinessList/SavedBusinessList";
+import { items } from "../../common/config/fields";
+import RoleBasedInput from "../../common/components/RoleBasedInput/RoleBasedInput";
+import { inputSx } from "../Authenticate/Authenticate";
+import styles from "../Authenticate/Authenticate.module.scss";
+import useForm from "../../hooks/useForm";
 
 export default function FilterForm() {
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   const [count, setCount] = React.useState(0);
+  const [state, handleChange] = useForm();
+  const [checkboxes, setCheckboxes] = React.useState([false, false, false, false]);
+  const dateLabels = ["Anytime", "New To Market", "Last 6 Months", "Last 12 Months"];
+
+  const handleCheckChange = (index) => {
+    const newCheckboxes = new Array(4).fill(false);
+    newCheckboxes[index] = true;
+    setCheckboxes(newCheckboxes);
+  };
+
   return (
     <Grid container sx={{ minheight: "100vh", marginTop: "150px" }}>
       <Grid item xs={12} md={8} sx={{ backgroundColor: "#DDDDDD" }}>
@@ -51,14 +79,118 @@ export default function FilterForm() {
         </Grid>
       </Grid>
       <Grid item xs={12} md={4}>
-        <Box p={3}>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="h5" sx={{ fontWeight: "800" }}>
-              Refine
-            </Typography>
-            <Typography variant="h6">Reset</Typography>
-          </div>
-        </Box>
+        <Grid container>
+          <form style={{ width: "100%" }}>
+            <Grid item xs={12}>
+              <Box p={3}>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <Typography variant="h5" sx={{ fontWeight: "800" }}>
+                    Refine
+                  </Typography>
+                  <Typography variant="h6">Reset</Typography>
+                </div>
+              </Box>
+              <Grid item xs={12}>
+                <RoleBasedInput all={true}>
+                  <Box m={2}>
+                    <TextField
+                      label="Location"
+                      type={"text"}
+                      name="location"
+                      fullWidth
+                      sx={inputSx}
+                      variant="standard"
+                      onChange={(e) => handleChange(e.target.name, e.target.value)}
+                    />
+                  </Box>
+                </RoleBasedInput>
+              </Grid>
+            </Grid>
+            {items.map((item, key) => {
+              if (item.type === "text" || item.type === "number" || item.type === "currency")
+                return (
+                  <Grid item xs={12} key={key}>
+                    <RoleBasedInput mode="filter" {...item}>
+                      <Box m={2}>
+                        <TextField
+                          label={item.type === "currency" ? item.label + " (up to) " : item.label}
+                          type={item.type === "currency" ? "number" : item.type}
+                          fullWidth
+                          sx={inputSx}
+                          variant="standard"
+                          name={item.name}
+                          onChange={(e) => handleChange(e.target.name, e.target.value)}
+                        />
+                      </Box>
+                    </RoleBasedInput>
+                  </Grid>
+                );
+              if (item.type === "select")
+                return (
+                  <Grid item xs={12} key={key}>
+                    <RoleBasedInput mode="filter" {...item}>
+                      <Box sx={{ minWidth: 120 }} m={2}>
+                        <FormControl fullWidth>
+                          <InputLabel id="demo-simple-select-label" color="warning">
+                            {item.label}
+                          </InputLabel>
+                          <Select
+                            variant="standard"
+                            label={item.label}
+                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                            name={item.name}
+                            color="warning"
+                            value={state[item.name] || ""}
+                          >
+                            {item.values.map((value, _index) => (
+                              <MenuItem key={_index} value={value}>
+                                {value}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Box>
+                    </RoleBasedInput>
+                  </Grid>
+                );
+              if (item.label === "Date added")
+                return (
+                  <Grid item xs={12} key={key}>
+                    <RoleBasedInput mode="filter" {...item}>
+                      <Box m={2}>
+                        <FormLabel>
+                          Listing Date
+                          {checkboxes.map((checkbox, _index) => (
+                            <div key={_index}>
+                              <Checkbox
+                                value={checkbox}
+                                onChange={() => handleCheckChange(_index)}
+                                checked={checkbox}
+                                sx={{
+                                  color: "#D4AE36",
+                                  "&.Mui-checked": {
+                                    color: "#D4AE36",
+                                  },
+                                }}
+                              />
+                              {dateLabels[_index]}
+                            </div>
+                          ))}
+                        </FormLabel>
+                      </Box>
+                    </RoleBasedInput>
+                  </Grid>
+                );
+            })}
+          </form>
+          <Grid item xs={12}>
+            <Box sx={{ textAlign: "center" }} m={2}>
+              <Button type="submit" variant="contained" className={styles["card__button"]}>
+                <Typography variant="caption">Search</Typography>
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );

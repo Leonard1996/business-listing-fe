@@ -66,12 +66,10 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount }) 
                 asking_price: askingPrice,
                 last_annual_turnover: lastAnnualTurnover,
                 last_annual_profit: lastAnnualProfit,
-                industry,
-                description,
               } = business;
 
               return (
-                <React.Fragment key={business.id}>
+                <React.Fragment key={id}>
                   <Grid item xs={3} sx={5} xl={3} sx={{ marginTop: "0.5rem" }}>
                     {path ? (
                       <div

@@ -22,71 +22,7 @@ import FileUploader from "../../../../common/components/FileUploader/FileUploade
 import { createBusiness } from "../../dashboard.service";
 import { AuthContext } from "../../../../context/Auth/Auth";
 import Loader from "../../../../common/components/Loader/Loader";
-
-const items = [
-  { type: "text", label: "Owner Name", name: "ownerName" },
-  { type: "number", label: "Age", name: "age" },
-  { type: "email", label: "Email", name: "email" },
-  { type: "text", label: "Number", name: "number" },
-  { type: "number", label: "No. of Staff", name: "noOfStaff" },
-  { type: "number", label: "No. of Shareholders", name: "noOfShareholders" },
-  {
-    type: "select",
-    label: "Property",
-    values: ["Leasehold", "Freehold", "Relocatable", "Accomodation Included"],
-    name: "relocatable",
-  },
-  { type: "select", label: "Owner Managed", values: ["Yes", "No"], name: "ownerManaged" },
-  {
-    type: "select",
-    label: "Reason For Selling",
-    values: ["Illness/Health", "Another venture", "Part of the plan"],
-    name: "reasonForSelling",
-  },
-  { type: "textArea", label: "Services", name: "services" },
-  //{type:"dropdown", label:"Town" },
-  //{type:"dropdown", label:"County" },
-  //{type:"dropdown", label:"Area" },
-  { type: "textArea", label: "Description", name: "description" },
-  { type: "datePicker", label: "Date added", name: "dateAdded" },
-  { type: "text", label: "Reference", name: "reference" },
-  {
-    type: "select",
-    label: "Industry",
-    name: "industry",
-    values: [
-      `Agriculture, Horticulture & Marine`,
-      `Bed & Breakfast, GuestHouse & Hotel`,
-      `Building & Construction`,
-      `Car, Motor & Transport`,
-      `Care`,
-      `Coaching, Education & Training`,
-      `Commercial Property`,
-      `Convenience, Newsagent & Post Office`,
-      `Engineering & Manufacturing`,
-      `Entertainment & Leisure`,
-      `Financial & Professional`,
-      `Food & Catering`,
-      `Franchise Resale`,
-      `Health & Beauty`,
-      `Licensed & Public House`,
-      `Media & Technology`,
-      `Retail & Shop`,
-      `Service`,
-    ],
-  },
-  { type: "datePicker", label: "Year Established", name: "yearEstablished" },
-  { type: "text", label: "Name of business", name: "nameOfBusiness" },
-  { type: "text", label: "Title", name: "title" },
-  { type: "currency", label: "Current Debts", name: "currentDebts" },
-  { type: "currency", label: "Projected Annual Profit", name: "projectedAnnualProfit" },
-  { type: "currency", label: "Last Annual Profit", name: "lastAnnualProfit" },
-  { type: "currency", label: "Projected Annual Turnover", name: "projectedAnnualTurnover" },
-  { type: "currency", label: "Last Annual Turnover", name: "lastAnnualTurnover" },
-  { type: "currency", label: "Asking Price", name: "askingPrice" },
-
-  //images
-];
+import { items } from "../../../../common/config/fields";
 
 export default function MyBusiness(props) {
   const [selects, setSelects] = React.useState({

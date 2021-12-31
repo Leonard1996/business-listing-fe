@@ -85,7 +85,7 @@ export default function SavedBusiness({
                   textOverflow: "ellipsis",
                   display: "-webkit-box",
                   webkitLineClamp: "4",
-                  webkitBoxOrient: "vertical",
+                  WebkitBoxOrient: "vertical",
                   fontSize: "0.7rem",
                   margin: 0,
                 }}
@@ -100,7 +100,7 @@ export default function SavedBusiness({
                 </Typography>
 
                 <Typography variant="caption" sx={{ fontWeight: "bold" }} component="span">
-                  ${askingPrice}
+                  {askingPrice && +askingPrice >= 0 ? "$ " + askingPrice : "N/A"}
                 </Typography>
               </div>
               {/* TURNOVER */}
@@ -110,7 +110,7 @@ export default function SavedBusiness({
                 </Typography>
 
                 <Typography variant="caption" sx={{ fontWeight: "bold" }} component="span">
-                  ${lastAnnualTurnover}
+                  {lastAnnualTurnover && +lastAnnualTurnover >= 0 ? "$ " + lastAnnualTurnover : "N/A"}
                 </Typography>
               </div>
               {/* PROFIT */}
@@ -120,7 +120,7 @@ export default function SavedBusiness({
                 </Typography>
 
                 <Typography variant="caption" sx={{ fontWeight: "bold" }} component="span">
-                  ${lastAnnualProfit}
+                  {lastAnnualProfit && +lastAnnualProfit >= 0 ? "$ " + lastAnnualProfit : "N/A"}
                 </Typography>
               </div>
               {/* INDUSTRY TYPE */}

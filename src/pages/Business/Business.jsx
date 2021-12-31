@@ -13,6 +13,14 @@ import HotelIcon from "@mui/icons-material/Hotel";
 import Gallery from "../../common/components/Slider/Gallery";
 import ReadOnlyMap from "../../common/components/ReadOnlyMap/ReadOnlyMap";
 import { inputSx } from "../Authenticate/Authenticate";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import SellIcon from "@mui/icons-material/Sell";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import EventIcon from "@mui/icons-material/Event";
+import MoneyOffIcon from "@mui/icons-material/MoneyOff";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
 
 export default function Business(props) {
   let timerId;
@@ -43,7 +51,8 @@ export default function Business(props) {
     return () => clearInterval(timerId);
   }, []);
 
-  const replacer = (entry) => {
+  const replacer = (entry, isCurrency) => {
+    if (+entry > -1 && isCurrency) return "$ " + entry;
     if (entry) return entry;
     return "N/A";
   };
@@ -77,7 +86,7 @@ export default function Business(props) {
           "https://valhallainvestments.co.uk/wp-content/uploads/2021/08/business-partners-handshake-international-business-concept-scaled.jpg"
         }
       />
-      <Grid container xs={{ minHeight: "100vh" }}>
+      <Grid container sx={{ minHeight: "100vh" }}>
         <Grid item xs={12} md={8}>
           <Box p={4} marginY={2}>
             <Typography variant="h5" sx={{ color: "#d4ae36" }}>
@@ -96,9 +105,15 @@ export default function Business(props) {
               </Grid>
               <Grid item xs={12} md={6}>
                 <div className={styles["container"]}>
-                  <p className={styles["container__description"]}>{business.description}</p>
+                  <p className={styles["container__description"]}>
+                    {business.description}
+                    <p>
+                      <b>Services: </b>
+                      {business.services}
+                    </p>
+                  </p>
                   <p>
-                    Asking Price: <b>$ {replacer(business.askingPrice)}(or open to offer)</b>
+                    Asking Price: <b>{replacer(business.askingPrice, true) + " (or open to offer)"}</b>
                   </p>
                   <p>
                     Reference: <b>{replacer(business.reference)}</b>
@@ -138,96 +153,246 @@ export default function Business(props) {
         </Grid>
         <Grid item xs={12} sx={{ backgroundColor: "#F6F6F7" }}>
           <Grid container>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
-            >
-              <div style={{ padding: "2rem" }}>
-                <ChangeCircleOutlinedIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
-              </div>
-              <div style={{ width: "150px" }}>
-                <Typography variant="overline">Turnover</Typography>
-                <Typography variant="h6">$ {replacer(business.lastAnnualTurnover)}</Typography>
-              </div>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
-            >
-              <div style={{ padding: "2rem" }}>
-                <SignalCellularAltOutlinedIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
-              </div>
-              <div style={{ width: "150px" }}>
-                <Typography variant="overline">Net Profit</Typography>
-                <Typography variant="h6">$ {replacer(business.lastAnnualProfit)}</Typography>
-              </div>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
-            >
-              <div style={{ padding: "2rem" }}>
-                <EventAvailableOutlinedIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
-              </div>
-              <div style={{ width: "150px" }}>
-                <Typography variant="overline">Established</Typography>
-                <Typography variant="h6">{replacer(business.yearEstablished?.slice(0, 4))}</Typography>
-              </div>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
-            >
-              <div style={{ padding: "2rem" }}>
-                <HomeWorkIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
-              </div>
-              <div style={{ width: "150px" }}>
-                <Typography variant="overline">Property Type</Typography>
-                <Typography variant="h6">{replacer(business.industry)}</Typography>
-              </div>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
-            >
-              <div style={{ padding: "2rem" }}>
-                <PeopleAltIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
-              </div>
-              <div style={{ width: "150px" }}>
-                <Typography variant="overline">Staff</Typography>
-                <Typography variant="h6">{business.noOfStaff ? "Yes" : "No"}</Typography>
-              </div>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
-            >
-              <div style={{ padding: "2rem" }}>
-                <HotelIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
-              </div>
-              <div style={{ width: "150px" }}>
-                <Typography variant="overline">Accomodation</Typography>
-                <Typography variant="h6">N/A</Typography>
-              </div>
-            </Grid>
+            {business.hasOwnProperty("lastAnnualTurnover") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <div style={{ padding: "2rem" }}>
+                  <ChangeCircleOutlinedIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                </div>
+                <div style={{ width: "150px" }}>
+                  <Typography variant="overline">Turnover</Typography>
+                  <Typography variant="h6">{replacer(business.lastAnnualTurnover, true)}</Typography>
+                </div>
+              </Grid>
+            )}
+            {business.hasOwnProperty("lastAnnualProfit") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <div style={{ padding: "2rem" }}>
+                  <SignalCellularAltOutlinedIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                </div>
+                <div style={{ width: "150px" }}>
+                  <Typography variant="overline">Net Profit</Typography>
+                  <Typography variant="h6">{replacer(business.lastAnnualProfit, true)}</Typography>
+                </div>
+              </Grid>
+            )}
+            {business.hasOwnProperty("yearEstablished") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <div style={{ padding: "2rem" }}>
+                  <EventAvailableOutlinedIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                </div>
+                <div style={{ width: "150px" }}>
+                  <Typography variant="overline">Established</Typography>
+                  <Typography variant="h6">{replacer(business.yearEstablished?.slice(0, 4))}</Typography>
+                </div>
+              </Grid>
+            )}
+            {business.hasOwnProperty("industry") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <div style={{ padding: "2rem" }}>
+                  <HomeWorkIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                </div>
+                <div style={{ width: "150px" }}>
+                  <Typography variant="overline">Type</Typography>
+                  <Typography variant="h6">{replacer(business.industry)}</Typography>
+                </div>
+              </Grid>
+            )}
+            {business.hasOwnProperty("noOfStaff") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <div style={{ padding: "2rem" }}>
+                  <PeopleAltIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                </div>
+                <div style={{ width: "150px" }}>
+                  <Typography variant="overline">Staff</Typography>
+                  <Typography variant="h6">{business.noOfStaff ? "Yes" : "No"}</Typography>
+                </div>
+              </Grid>
+            )}
+            {business.hasOwnProperty("accomodation") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <>
+                  <div style={{ padding: "2rem" }}>
+                    <HotelIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                  </div>
+                  <div style={{ width: "150px" }}>
+                    <Typography variant="overline">Accomodation</Typography>
+                    <Typography variant="h6">N/A</Typography>
+                  </div>
+                </>
+              </Grid>
+            )}
+            {business.hasOwnProperty("noOfShareholders") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <div style={{ padding: "2rem" }}>
+                  <AccountBoxIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                </div>
+                <div style={{ width: "150px" }}>
+                  <Typography variant="overline">Shareholders</Typography>
+                  <Typography variant="h6">{business.noOfShareholders ? business.noOfShareholders : 0}</Typography>
+                </div>
+              </Grid>
+            )}
+            {business.hasOwnProperty("ownerManaged") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <div style={{ padding: "2rem" }}>
+                  <ManageAccountsIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                </div>
+                <div style={{ width: "150px" }}>
+                  <Typography variant="overline">Owner Managed</Typography>
+                  <Typography variant="h6">{replacer(business.ownerManaged)}</Typography>
+                </div>
+              </Grid>
+            )}
+            {business.hasOwnProperty("reasonForSelling") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <div style={{ padding: "2rem" }}>
+                  <SellIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                </div>
+                <div style={{ width: "150px" }}>
+                  <Typography variant="overline">Reason for selling</Typography>
+                  <Typography variant="h6">{replacer(business.reasonForSelling)}</Typography>
+                </div>
+              </Grid>
+            )}
+            {business.hasOwnProperty("city") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <div style={{ padding: "2rem" }}>
+                  <FmdGoodIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                </div>
+                <div style={{ width: "150px" }}>
+                  <Typography variant="overline">City</Typography>
+                  <Typography variant="h6">{replacer(business.city)}</Typography>
+                </div>
+              </Grid>
+            )}
+            {business.hasOwnProperty("dateAdded") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <div style={{ padding: "2rem" }}>
+                  <EventIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                </div>
+                <div style={{ width: "150px" }}>
+                  <Typography variant="overline">Date listed</Typography>
+                  <Typography variant="h6">{replacer(business.dateAdded?.slice(0, 10))}</Typography>
+                </div>
+              </Grid>
+            )}
+            {business.hasOwnProperty("currentDebts") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <div style={{ padding: "2rem" }}>
+                  <MoneyOffIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                </div>
+                <div style={{ width: "150px" }}>
+                  <Typography variant="overline">Current debts</Typography>
+                  <Typography variant="h6">{replacer(business.currentDebts, true)}</Typography>
+                </div>
+              </Grid>
+            )}
+            {business.hasOwnProperty("projectedAnnualProfit") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <div style={{ padding: "2rem" }}>
+                  <MonetizationOnIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                </div>
+                <div style={{ width: "150px" }}>
+                  <Typography variant="overline">projected annual profit</Typography>
+                  <Typography variant="h6">{replacer(business.projectedAnnualProfit, true)}</Typography>
+                </div>
+              </Grid>
+            )}
+            {business.hasOwnProperty("projectedAnnualTurnover") && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginY: "1rem" }}
+              >
+                <div style={{ padding: "2rem" }}>
+                  <SettingsBackupRestoreIcon sx={{ transform: "scale(2.5)", fill: "#D4AD36" }} />
+                </div>
+                <div style={{ width: "150px" }}>
+                  <Typography variant="overline">projected annual turnover</Typography>
+                  <Typography variant="h6">{replacer(business.projectedAnnualTurnover, true)}</Typography>
+                </div>
+              </Grid>
+            )}
           </Grid>
         </Grid>
         <Grid item xs={12} sx={{ backgroundColor: "#D4AE36", display: "flex" }}>
