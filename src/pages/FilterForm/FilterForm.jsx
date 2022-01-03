@@ -26,11 +26,21 @@ export default function FilterForm() {
   const [state, handleChange] = useForm();
   const [checkboxes, setCheckboxes] = React.useState([false, false, false, false]);
   const dateLabels = ["Anytime", "New To Market", "Last 6 Months", "Last 12 Months"];
+  const dateValues = [99999999, 32, 193, 385];
+  const [isWithFilter, setIsWithFilter] = React.useState(0);
+  const [filterParams, setFilterParams] = React.useState({});
 
   const handleCheckChange = (index) => {
     const newCheckboxes = new Array(4).fill(false);
     newCheckboxes[index] = true;
     setCheckboxes(newCheckboxes);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const tsCreated = checkboxes.findIndex((label) => label);
+    setFilterParams({ ...state, ...(tsCreated > -1 && { tsCreated: dateValues[tsCreated] }) });
+    setIsWithFilter((prevCount) => prevCount + 1);
   };
 
   return (
@@ -74,20 +84,28 @@ export default function FilterForm() {
         </Box>
         <Grid item xs={12}>
           <Box p={isSmallScreen ? 0 : 3}>
-            <SavedBusinessList hidden={true} isFilter={true} setFilterCount={setCount} />
+            <SavedBusinessList
+              hidden={true}
+              isFilter={true}
+              setFilterCount={setCount}
+              isWithFilter={isWithFilter}
+              filterParams={filterParams}
+            />
           </Box>
         </Grid>
       </Grid>
       <Grid item xs={12} md={4}>
         <Grid container>
-          <form style={{ width: "100%" }}>
+          <form style={{ width: "100%" }} onSubmit={handleSubmit}>
             <Grid item xs={12}>
               <Box p={3}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <Typography variant="h5" sx={{ fontWeight: "800" }}>
                     Refine
                   </Typography>
-                  <Typography variant="h6">Reset</Typography>
+                  <Typography variant="h6" sx={{ cursor: "pointer" }} onClick={() => setIsWithFilter(0)}>
+                    Reset
+                  </Typography>
                 </div>
               </Box>
               <Grid item xs={12}>
@@ -182,14 +200,14 @@ export default function FilterForm() {
                   </Grid>
                 );
             })}
+            <Grid item xs={12}>
+              <Box sx={{ textAlign: "center" }} m={2}>
+                <Button type="submit" variant="contained" className={styles["card__button"]}>
+                  <Typography variant="caption">Search</Typography>
+                </Button>
+              </Box>
+            </Grid>
           </form>
-          <Grid item xs={12}>
-            <Box sx={{ textAlign: "center" }} m={2}>
-              <Button type="submit" variant="contained" className={styles["card__button"]}>
-                <Typography variant="caption">Search</Typography>
-              </Button>
-            </Box>
-          </Grid>
         </Grid>
       </Grid>
     </Grid>

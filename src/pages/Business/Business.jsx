@@ -23,6 +23,12 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
 
 export default function Business(props) {
+  const homepageStyles = {
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  };
+
   let timerId;
   const [business, setBusiness] = React.useState({});
   const [message, setMessage] = React.useState({
@@ -85,7 +91,10 @@ export default function Business(props) {
         src={
           "https://valhallainvestments.co.uk/wp-content/uploads/2021/08/business-partners-handshake-international-business-concept-scaled.jpg"
         }
-      />
+        homepageStyles={homepageStyles}
+      >
+        <BannerContent location={business.city} />
+      </Hero>
       <Grid container sx={{ minHeight: "100vh" }}>
         <Grid item xs={12} md={8}>
           <Box p={4} marginY={2}>
@@ -604,3 +613,47 @@ export default function Business(props) {
     </>
   );
 }
+
+const BannerContent = ({ location }) => {
+  return (
+    <div style={{ marginTop: "2rem" }}>
+      <Box p={3}>
+        <Typography
+          variant="h3"
+          sx={{
+            color: "white",
+            fontWeight: "500",
+            textShadow: `1px 1px 1px #000, 
+               3px 3px 5px black`,
+          }}
+        >
+          Business For Sale In
+        </Typography>
+        <Typography
+          variant="h3"
+          sx={{
+            color: "white",
+            fontWeight: "500",
+            textShadow: `1px 1px 1px #000, 
+               3px 3px 5px black`,
+          }}
+        >
+          {location ? location : "N / A"}
+        </Typography>
+        <Box sx={{ textAlign: "center" }} marginTop={10} marginBottom={5}>
+          <div style={{ width: "100px", border: "1px solid #D4AE36" }}></div>
+        </Box>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "white",
+            textShadow: `1px 1px 1px #000, 
+               3px 3px 5px black`,
+          }}
+        >
+          Lorem ipsum dolor s i t a met , consec tetur adipi s c ing elit
+        </Typography>
+      </Box>
+    </div>
+  );
+};

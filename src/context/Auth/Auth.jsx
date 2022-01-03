@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-
-const parseLocalStorage = () => {
-  const token = localStorage.getItem("token");
-  try {
-    return JSON.parse(token);
-  } catch (error) {
-    return null;
-  }
-};
+import { useHistory } from "react-router-dom";
 
 export const AuthContext = React.createContext(null);
 
 export default function AuthProvider({ children }) {
+  const history = useHistory();
+  const parseLocalStorage = () => {
+    const token = localStorage.getItem("token");
+    try {
+      return JSON.parse(token);
+    } catch (error) {
+      localStorage.clear();
+      window.location.href = "/";
+      return null;
+    }
+  };
   const [accessToken, setToken] = useState(parseLocalStorage());
   const [mapState, setMapState] = useState({
     address: "",

@@ -41,13 +41,16 @@ export const createBusiness = async (business) => {
   }
 };
 
-export const listBusinesses = async (page, isFilter) => {
+export const listBusinesses = async (page, isFilter, isWithFilter, filterParams) => {
   try {
-    let query = process.env.REACT_APP_API + `/businesses?page=${page}`
+    let query = isWithFilter ? process.env.REACT_APP_API + `/businesses/filter?page=${page}` : process.env.REACT_APP_API + `/businesses?page=${page}`
     if (isFilter) query += "&isFilter=1"
-    const businesses = await axiosApiInstance.get(query);
+    let businesses;
+    if (!isWithFilter) businesses = await axiosApiInstance.get(query);
+    else businesses = await axiosApiInstance.post(query, filterParams);
     return [businesses, null];
   } catch (error) {
+    console.log(error)
     return [null, JSON.stringify(error)];
   }
 };

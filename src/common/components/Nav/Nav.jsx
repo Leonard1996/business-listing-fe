@@ -1,19 +1,26 @@
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Typography, useScrollTrigger, Drawer } from "@mui/material";
-import React from "react";
+import { useScrollTrigger, Drawer, breadcrumbsClasses } from "@mui/material";
+import React, { useContext } from "react";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 //
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import { AuthContext } from "../../../context/Auth/Auth";
+import { useHistory } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
+import AddBusinessIcon from "@mui/icons-material/AddBusiness";
+import SellIcon from "@mui/icons-material/Sell";
+import TimelineIcon from "@mui/icons-material/Timeline";
 //
 
 export default function Nav() {
@@ -31,7 +38,8 @@ export default function Nav() {
   };
 
   const iconStyle = {
-    fill: "black",
+    fill: trigger ? "black" : "#d4ae36",
+    transform: trigger ? "scale(1.0)" : "scale(1.75)",
   };
 
   const [drawer, setDrawer] = React.useState(false);
@@ -51,30 +59,81 @@ export default function Nav() {
         </Toolbar>
       </AppBar>
       <Drawer open={drawer} onClose={() => setDrawer(false)} anchor="right">
-        {routes()}
+        <Routes onClose={() => setDrawer(false)} />
       </Drawer>
     </>
   );
 }
 
-const routes = () => (
-  <Box sx={{ width: 250 }} role="presentation">
-    <List>
-      {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-        <ListItem button key={text}>
-          <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItem>
-      ))}
-    </List>
-    <Divider />
-    <List>
-      {["All mail", "Trash", "Spam"].map((text, index) => (
-        <ListItem button key={text}>
-          <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItem>
-      ))}
-    </List>
-  </Box>
-);
+const Routes = ({ onClose }) => {
+  const { accessToken } = useContext(AuthContext);
+  const icons = [<HomeIcon />, <AddBusinessIcon />, <SellIcon />, <TimelineIcon />];
+
+  const history = useHistory();
+  const handleClick = (index) => {
+    switch (index) {
+      case 0:
+        history.push("/");
+        onClose();
+        break;
+      case 1:
+        history.push("/buy-businesses");
+        onClose();
+        break;
+      case 2:
+        history.push("/sell");
+        onClose();
+        break;
+      case 3:
+        history.push("/grow");
+        onClose();
+        break;
+      case 4:
+        history.push("/signin");
+        onClose();
+        break;
+      case 10:
+        console.log("here");
+        history.push("/dashboard");
+        onClose();
+        break;
+      default:
+        localStorage.clear();
+        window.location.reload(false);
+        onClose();
+    }
+  };
+  return (
+    <Box sx={{ width: 250 }} role="presentation">
+      <List>
+        {["Home", "Buy Businesses", "Sell your business", "Grow your business"].map((text, index) => (
+          <ListItem button key={text} onClick={() => handleClick(index)}>
+            <ListItemIcon>{icons[index]}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+        {!accessToken && (
+          <ListItem button onClick={() => handleClick(4)}>
+            <ListItemIcon>
+              <LoginIcon />
+            </ListItemIcon>
+            <ListItemText primary="Authenticate" />
+          </ListItem>
+        )}
+      </List>
+      <Divider />
+      <List>
+        {accessToken &&
+          ["Dashboard", "Sign out"].map((text, index) => (
+            <ListItem button key={text} onClick={() => handleClick(index + 10)}>
+              <ListItemIcon>
+                {text === "Dashboard" && <DashboardIcon sx={{ fill: "#d4ae36" }} />}
+                {text === "Sign out" && <LogoutIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+      </List>
+    </Box>
+  );
+};

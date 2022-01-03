@@ -4,14 +4,22 @@ import SavedBusiness from "../SavedBusiness/SavedBusiness";
 import { listBusinesses } from "../../dashboard.service";
 import Pagination from "@mui/material/Pagination";
 
-export default function SavedBusinessList({ hidden, isFilter, setFilterCount }) {
+export default function SavedBusinessList({ hidden, isFilter, setFilterCount, isWithFilter, filterParams }) {
   const [businesses, setBusinesses] = React.useState([]);
   const [count, setCount] = React.useState(1);
   const [page, setPage] = React.useState(1);
+  const [pageFilter, setPageFilter] = React.useState(1);
+
+  const filterCount = React.useRef(0);
+
   const [isLoading, setIsLoading] = React.useState(true);
 
-  const callBusinessesService = async (page) => {
-    const [businesses, error] = await listBusinesses(page, isFilter);
+  const callBusinessesService = async (page, isWithFilter) => {
+    const [businesses, error] = await listBusinesses(page, isFilter, isWithFilter, filterParams);
+    if (error) {
+      setIsLoading(false);
+      return;
+    }
     const {
       data: {
         data: {
@@ -27,10 +35,20 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount }) 
   };
 
   React.useEffect(() => {
-    if (page) {
-      callBusinessesService(page);
+    if (page && !isWithFilter) {
+      filterCount.current = isWithFilter;
+      setPageFilter(1);
+      callBusinessesService(page, false);
     }
-  }, [page]);
+  }, [page, isWithFilter]);
+
+  React.useEffect(() => {
+    if (isWithFilter && (filterCount.current < isWithFilter || pageFilter)) {
+      filterCount.current = isWithFilter;
+      setPage(1);
+      callBusinessesService(pageFilter, true);
+    }
+  }, [pageFilter, isWithFilter]);
 
   const loadingStyle = {
     display: "flex",
@@ -40,7 +58,11 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount }) 
   };
 
   const handlePageChange = (event, value) => {
-    setPage(value);
+    if (isWithFilter) {
+      setPageFilter(value);
+    } else {
+      setPage(value);
+    }
   };
 
   return (
@@ -50,12 +72,17 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount }) 
       ) : (
         <>
           <Box paddingTop={2}>
-            <Pagination
-              sx={{ display: "flex", justifyContent: "center" }}
-              onChange={handlePageChange}
-              count={count}
-              color="warning"
-            />
+            {businesses?.length ? (
+              <Pagination
+                sx={{ display: "flex", justifyContent: "center" }}
+                onChange={handlePageChange}
+                count={count}
+                color="warning"
+                page={isWithFilter ? pageFilter : page}
+              />
+            ) : (
+              <div style={{ color: "red" }}>No businesses to display</div>
+            )}
           </Box>
           <Grid container sx={{ padding: "0.5rem" }}>
             {businesses.map((business) => {

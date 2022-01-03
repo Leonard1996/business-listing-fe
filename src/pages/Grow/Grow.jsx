@@ -1,17 +1,26 @@
-import { Grid, Box, TextField, useMediaQuery } from "@mui/material";
+import { Grid, Box, TextField, useMediaQuery, Button, Typography } from "@mui/material";
 import Category from "./components/Category";
 import Hero from "../../common/components/Hero/Hero";
+import styles from "./components/Category.module.scss";
+import { inputSx } from "../Authenticate/Authenticate";
 
 const categories = ["Hot Topics", "Guides", "Business Insights"];
+const homepageStyles = {
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+};
 
 export default function Grow() {
   const isSmallScreen = useMediaQuery("(max-width:600px)");
-
   return (
     <>
       <Hero
         src={"https://valhallainvestments.co.uk/wp-content/uploads/2020/06/Valhalhalla_Accountability_1600x1120.jpg"}
-      />
+        homepageStyles={homepageStyles}
+      >
+        <BannerContent />
+      </Hero>
       <Grid container sx={{ margin: "3rem auto" }}>
         <Grid item xs={12}>
           <form>
@@ -52,3 +61,58 @@ export default function Grow() {
     </>
   );
 }
+
+const BannerContent = () => {
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
+  return (
+    <div>
+      <Box marginLeft="4rem">
+        <Typography
+          variant="h3"
+          sx={{
+            color: "white",
+            fontWeight: "500",
+            textShadow: `1px 1px 1px #000, 
+               3px 3px 5px black`,
+          }}
+        >
+          Grow Your Business
+        </Typography>
+        <Box my={2}>
+          <TextField
+            label="Email adress"
+            variant="outlined"
+            size="small"
+            sx={{
+              "& label.Mui-focused": {
+                color: "black",
+              },
+              "& .MuiInput-underline:after": {
+                borderBottomColor: "black",
+              },
+              "& .MuiOutlinedInput-root": {
+                background: "white!important",
+                "& fieldset": {
+                  borderColor: "black",
+                },
+
+                "&.Mui-focused fieldset": {
+                  borderColor: "black",
+                },
+              },
+            }}
+          />
+          <Box
+            sx={{ display: isSmallScreen ? "block" : "inline-block" }}
+            marginX={isSmallScreen ? 0 : 2}
+            marginY={isSmallScreen ? 2 : 0}
+          >
+            <Button variant="contained" className={styles["card__button"]}>
+              <Typography variant="caption">Join</Typography>
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+    </div>
+  );
+};
