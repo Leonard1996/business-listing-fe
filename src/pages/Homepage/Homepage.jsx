@@ -5,6 +5,7 @@ import Tertiary from "./components/Tertiary/Tertiary";
 import Slider from "../../common/components/Slider/Slider";
 import { Box, Button, Typography } from "@mui/material";
 import styles from "./components/Primary/Primary.module.scss";
+import banner from "../../assets/images/homepage.jpeg";
 
 const homepageStyles = {
   display: "flex",
@@ -15,10 +16,7 @@ const homepageStyles = {
 export default function Homepage() {
   return (
     <>
-      <Hero
-        src={"https://valhallainvestments.co.uk/wp-content/uploads/2020/06/Valhalhalla_Business-Planning_1600x1120.jpg"}
-        homepageStyles={homepageStyles}
-      >
+      <Hero src={banner} homepageStyles={homepageStyles}>
         <BannerContent />
       </Hero>
       <Primary />

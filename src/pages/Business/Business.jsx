@@ -21,6 +21,7 @@ import EventIcon from "@mui/icons-material/Event";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
+import banner from "../../assets/images/businesses.jpeg";
 
 export default function Business(props) {
   const homepageStyles = {
@@ -87,12 +88,7 @@ export default function Business(props) {
 
   return (
     <>
-      <Hero
-        src={
-          "https://valhallainvestments.co.uk/wp-content/uploads/2021/08/business-partners-handshake-international-business-concept-scaled.jpg"
-        }
-        homepageStyles={homepageStyles}
-      >
+      <Hero src={banner} homepageStyles={homepageStyles}>
         <BannerContent location={business.city} />
       </Hero>
       <Grid container sx={{ minHeight: "100vh" }}>

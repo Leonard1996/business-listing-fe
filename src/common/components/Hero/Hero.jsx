@@ -10,7 +10,6 @@ export default function Hero({ src, children, homepageStyles }) {
     backgroundAttachment: "scroll",
     height: "500px",
     backgroundSize: "cover",
-    width: "100vw",
     ...(match && { filter: "brightness(85%)" }),
   };
   return (

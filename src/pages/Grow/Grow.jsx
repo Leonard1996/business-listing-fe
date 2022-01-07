@@ -3,6 +3,7 @@ import Category from "./components/Category";
 import Hero from "../../common/components/Hero/Hero";
 import styles from "./components/Category.module.scss";
 import { inputSx } from "../Authenticate/Authenticate";
+import banner from "../../assets/images/grow.jpeg";
 
 const categories = ["Hot Topics", "Guides", "Business Insights"];
 const homepageStyles = {
@@ -15,10 +16,7 @@ export default function Grow() {
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   return (
     <>
-      <Hero
-        src={"https://valhallainvestments.co.uk/wp-content/uploads/2020/06/Valhalhalla_Accountability_1600x1120.jpg"}
-        homepageStyles={homepageStyles}
-      >
+      <Hero src={banner} homepageStyles={homepageStyles}>
         <BannerContent />
       </Hero>
       <Grid container sx={{ margin: "3rem auto" }}>

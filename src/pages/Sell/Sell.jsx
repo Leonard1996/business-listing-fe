@@ -5,6 +5,7 @@ import Quote from "./components/Quote/Quote";
 import Slider from "../../common/components/Slider/Slider";
 import styles from "./components/Primary/Primary.module.scss";
 import { Box, Button, Typography } from "@mui/material";
+import banner from "../../assets/images/sell.jpeg";
 const homepageStyles = {
   display: "flex",
   justifyContent: "center",
@@ -13,12 +14,7 @@ const homepageStyles = {
 export default function Sell() {
   return (
     <>
-      <Hero
-        src={
-          "https://valhallainvestments.co.uk/wp-content/uploads/2020/06/Valhalhalla_Mergers-Acquisitions_1600x1120-1.jpg"
-        }
-        homepageStyles={homepageStyles}
-      >
+      <Hero src={banner} homepageStyles={homepageStyles}>
         <BannerContent />
       </Hero>
       <Primary />
