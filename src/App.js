@@ -20,6 +20,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Business from "./pages/Business/Business";
 import FilterForm from "./pages/FilterForm/FilterForm";
+import { Users } from "./pages/AdminPanel/Users";
 
 const theme = createTheme({
   palette: {
@@ -42,6 +43,7 @@ function App() {
             <Route path="/sell" component={Sell} />
             <Route path="/signup" component={Authenticate} />
             <Route path="/buy-businesses" component={FilterForm} />
+            <Route path="/admin-panel" component={Users} />
             <Route path="/signin" component={Login} />
             <Route path="/verify/:token" component={ActivateAccount} />
             <Route exact path="/businesses/:businessId" component={Business} />

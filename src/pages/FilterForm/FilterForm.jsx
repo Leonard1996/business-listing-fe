@@ -13,7 +13,7 @@ import {
   FormLabel,
 } from "@mui/material";
 import React from "react";
-import SavedBusinessList from "../Dashboard/components/SavedBusinessList/SavedBusinessList";
+import SavedBusinessList from "../Dashboard/Components/SavedBusinessList/SavedBusinessList";
 import { items } from "../../common/config/fields";
 import RoleBasedInput from "../../common/components/RoleBasedInput/RoleBasedInput";
 import { inputSx } from "../Authenticate/Authenticate";

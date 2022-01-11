@@ -1,10 +1,10 @@
 import { Grid, useMediaQuery } from "@mui/material";
-import Menu from "./components/Menu/Menu";
+import Menu from "./Components/Menu/Menu";
 import React from "react";
 import PrivateRoute from "../../common/components/PrivateRoute/PrivateRoute";
-import MyDetails from "./components/MyDetails/MyDetails";
-import MyBusiness from "./components/MyBusiness/MyBusiness";
-import SavedBusinessList from "./components/SavedBusinessList/SavedBusinessList";
+import MyDetails from "./Components/MyDetails/MyDetails";
+import MyBusiness from "./Components/MyBusiness/MyBusiness";
+import SavedBusinessList from "./Components/SavedBusinessList/SavedBusinessList";
 
 export default function Dashboard(props) {
   const [open, setOpen] = React.useState(false);
