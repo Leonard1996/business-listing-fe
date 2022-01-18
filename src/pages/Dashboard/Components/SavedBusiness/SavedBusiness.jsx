@@ -6,7 +6,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { useHistory } from "react-router-dom";
 import Modal from "../../../../common/components/Modal/Modal";
-import { deleteBusiness } from "../../dashboard.service.js";
+import { check, deleteBusiness, like } from "../../dashboard.service.js";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 export default function SavedBusiness({
   businessName,
@@ -18,14 +19,24 @@ export default function SavedBusiness({
   id,
   businessService,
   hidden,
+  save,
 }) {
   const heightRef = React.useRef(null);
+  const checkLike = async () => {
+    const [liked, error] = await check(id);
+    if (!error) {
+      setIsSaved(!liked?.data?.data?.deleted);
+      return;
+    }
+  };
   useEffect(() => {
+    checkLike();
     return () => clearInterval(timerId);
   }, []);
 
   const history = useHistory();
   const handleModalClose = () => setModal((prevState) => ({ ...prevState, isOpen: false }));
+  const [isSaved, setIsSaved] = React.useState(false);
 
   const deleteService = async () => {
     setModal((prevState) => ({ ...prevState, pending: "Deleting...", disabled: true }));
@@ -42,6 +53,14 @@ export default function SavedBusiness({
       }, 2000);
     }
     businessService();
+  };
+
+  const handleSave = async (id) => {
+    const [liked, error] = await like(id);
+    if (!error) {
+      setIsSaved(!liked?.data?.data?.deleted);
+      return;
+    }
   };
 
   const [modal, setModal] = React.useState({
@@ -75,7 +94,7 @@ export default function SavedBusiness({
       >
         <CardContent>
           <Grid container spacing={1}>
-            <Grid item xs={6}>
+            <Grid item xs={0}>
               <Typography ref={heightRef} variant="h6">
                 {businessName ? businessName : "Name not available"}
               </Typography>
@@ -84,7 +103,7 @@ export default function SavedBusiness({
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   display: "-webkit-box",
-                  webkitLineClamp: "4",
+                  webkitLineClamp: "2",
                   WebkitBoxOrient: "vertical",
                   fontSize: "0.7rem",
                   margin: 0,
@@ -93,7 +112,7 @@ export default function SavedBusiness({
                 {description ? description : "No description set for this entry"}
               </p>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Typography variant="caption" sx={{ fontWeight: "bold" }} component="span">
                   Asking Price
@@ -142,6 +161,9 @@ export default function SavedBusiness({
               <div title="Delete">{!hidden && <DeleteForeverIcon onClick={handleDelete} />}</div>
               <div title="View">
                 <RemoveRedEyeIcon onClick={() => history.push("/businesses/" + id)} />
+              </div>
+              <div title="Add to 'Save Search'">
+                {save && <FavoriteIcon onClick={() => handleSave(id)} sx={{ fill: isSaved ? "red" : "#ccc" }} />}
               </div>
             </Grid>
           </Grid>

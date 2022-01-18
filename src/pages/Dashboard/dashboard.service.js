@@ -41,13 +41,16 @@ export const createBusiness = async (business) => {
   }
 };
 
-export const listBusinesses = async (page, isFilter, isWithFilter, filterParams) => {
+export const listBusinesses = async (page, isFilter, isWithFilter, filterParams, isSaved) => {
   try {
-    let query = isWithFilter ? process.env.REACT_APP_API + `/businesses/filter?page=${page}` : process.env.REACT_APP_API + `/businesses?page=${page}`
+    let query = isWithFilter ? process.env.REACT_APP_API + `/${isSaved ? 'like-business' : 'businesses'}/${isSaved ? '' : 'filter'}?page=${page}` : process.env.REACT_APP_API + `/${isSaved ? 'like-business' : 'businesses'}?page=${page}`
     if (isFilter) query += "&isFilter=1"
     let businesses;
     if (!isWithFilter) businesses = await axiosApiInstance.get(query);
-    else businesses = await axiosApiInstance.post(query, filterParams);
+    else {
+      if (isSaved) businesses = await axiosApiInstance.get(query, filterParams);
+      else businesses = await axiosApiInstance.post(query, filterParams);
+    }
     return [businesses, null];
   } catch (error) {
     console.log(error)
@@ -60,6 +63,39 @@ export const deleteBusiness = async (id) => {
     const business = await axiosApiInstance.delete(process.env.REACT_APP_API + `/businesses/` + id);
     return [business, null];
   } catch (error) {
+    return [null, JSON.stringify(error)];
+  }
+};
+
+export const like = async (id) => {
+  try {
+    const business = await axiosApiInstance.post(process.env.REACT_APP_API + `/like-business/`, { id });
+    return [business, null];
+  } catch (error) {
+    return [null, JSON.stringify(error)];
+  }
+};
+
+export const check = async (id) => {
+  try {
+    const business = await axiosApiInstance.get(process.env.REACT_APP_API + `/like-business/` + id);
+    return [business, null];
+  } catch (error) {
+    return [null, JSON.stringify(error)];
+  }
+};
+
+
+export const listLiked = async (page, isFilter, isWithFilter, filterParams) => {
+  try {
+    let query = isWithFilter ? process.env.REACT_APP_API + `/like-business/filter?page=${page}` : process.env.REACT_APP_API + `/like-business?page=${page}`
+    if (isFilter) query += "&isFilter=1"
+    let businesses;
+    if (!isWithFilter) businesses = await axiosApiInstance.get(query);
+    else businesses = await axiosApiInstance.post(query, filterParams);
+    return [businesses, null];
+  } catch (error) {
+    console.log(error)
     return [null, JSON.stringify(error)];
   }
 };

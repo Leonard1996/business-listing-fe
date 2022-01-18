@@ -26,6 +26,9 @@ const theme = createTheme({
     warning: {
       main: '#d4ae36',
     },
+    secondary: {
+      main: '#d4ae36',
+    },
   },
 });
 
