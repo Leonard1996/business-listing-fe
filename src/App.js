@@ -47,6 +47,7 @@ function App() {
             <Route path="/sell" component={Sell} />
             <Route path="/signup" component={Authenticate} />
             <Route path="/buy-businesses" component={FilterForm} />
+            <Route path="/admin-panel" component={Users} />
             <Route path="/signin" component={Login} />
             <Route path="/verify/:token" component={ActivateAccount} />
             <Route exact path="/businesses/:businessId" component={Business} />
