@@ -23,8 +23,9 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
 import banner from "../../assets/images/businesses.jpeg";
 import SimilarBusiness from "./SimilarBusiness";
-
+import { useParams } from "react-router-dom";
 export default function Business(props) {
+  const params = useParams();
   const homepageStyles = {
     display: "flex",
     justifyContent: "flex-start",
@@ -82,11 +83,12 @@ export default function Business(props) {
   const handleSubmit = async (event) => {
     setMessage({ disabled: true, innerText: "CONTACT SELLER" });
     event.preventDefault();
-    const [message, error] = await insertMessage(business?.id, {
+    const [message, error] = await insertMessage(params.businessId, {
       name: nameRef.current.value,
       email: emailRef.current.value,
       subject: subjectRef.current.value,
       message: messageRef.current.value,
+      businessId: params.businessId,
     });
     if (!error) {
       setMessage({ disabled: true, innerText: "MESSAGE SENT" });
@@ -341,7 +343,7 @@ export default function Business(props) {
                 </div>
                 <div style={{ width: "150px" }}>
                   <Typography variant="overline">City</Typography>
-                  <Typography variant="h6">{replacer(business.city)}</Typography>
+                  <Typography variant="h6">{replacer(business.city === "" ? business.area : business.city)}</Typography>
                 </div>
               </Grid>
             )}

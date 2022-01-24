@@ -4,19 +4,13 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import logo from "../../../assets/images/grow.png";
 
 export default function Footer() {
   return (
     <div className={styles["container"]}>
       <div className={styles["container__logo"]}>
-        {/* <Typography variant="h2" sx={{ color: "white" }}>
-          Logo
-        </Typography> */}
-        <img
-          src={
-            "https://valhallainvestments.co.uk/wp-content/uploads/2019/09/Valhalla-Investment_Logo-Long_210x100-01.png"
-          }
-        />
+        <img src={logo} height={80} />
       </div>
 
       <div className={styles["container__categories"]}>

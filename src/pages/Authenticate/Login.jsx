@@ -5,6 +5,7 @@ import styles from "./Authenticate.module.scss";
 import { login } from "./authenticate.service";
 import Notification from "../../common/components/Notification/Notification";
 import { AuthContext } from "../../context/Auth/Auth";
+import ResetPasswordModal from "../../common/components/ResetPasswordModal/ResetPasswordModal";
 
 export default function Login(props) {
   const emailRef = useRef(null),
@@ -24,6 +25,12 @@ export default function Login(props) {
     open: false,
   });
   const [isLoading, setIsLoading] = useState(false);
+
+  const [resetPassword, setResetPassword] = useState({
+    open: false,
+    handleClose: () => setResetPassword((prevState) => ({ ...prevState, open: false })),
+    handleClickOpen: () => setResetPassword((prevState) => ({ ...prevState, open: true })),
+  });
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -104,6 +111,19 @@ export default function Login(props) {
                       Don't have an account? Click here to register!
                     </Typography>
                   </Box>
+                  <Box mt={0.5}>
+                    <Typography
+                      textAlign="center"
+                      variant="body1"
+                      color="primary"
+                      sx={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => resetPassword.handleClickOpen()}
+                    >
+                      Forgot Your password? Click here to reset!
+                    </Typography>
+                  </Box>
                 </form>
               )}
             </CardContent>
@@ -111,6 +131,7 @@ export default function Login(props) {
         </Grid>
       </Grid>
       {notification.open && <Notification {...notification} />}
+      <ResetPasswordModal {...resetPassword} />
     </>
   );
 }

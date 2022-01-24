@@ -27,9 +27,12 @@ export const createBusiness = async (business) => {
   delete business.files;
   formData.append("business", JSON.stringify(business));
 
+  const { businessId } = business;
+
 
   try {
-    const business = await axios.post(process.env.REACT_APP_API + "/business", formData, {
+    console.log({ businessId })
+    const business = await axios[businessId ? 'patch' : 'post'](process.env.REACT_APP_API + "/businesses", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": JSON.parse(localStorage.getItem("token")),
@@ -99,6 +102,16 @@ export const listLiked = async (page, isFilter, isWithFilter, filterParams) => {
     return [null, JSON.stringify(error)];
   }
 };
+
+export const deleteAttachment = async (attachmentId, businessId) => {
+  try {
+    const result = await axiosApiInstance.delete(process.env.REACT_APP_API + "/attachments/" + attachmentId + "/businesses/" + businessId);
+    return [result, null];
+  } catch (error) {
+    console.log(error)
+    return [null, JSON.stringify(error)];
+  }
+}
 
 
 

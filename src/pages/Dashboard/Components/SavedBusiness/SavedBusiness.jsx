@@ -25,7 +25,7 @@ export default function SavedBusiness({
   const checkLike = async () => {
     const [liked, error] = await check(id);
     if (!error) {
-      setIsSaved(!liked?.data?.data?.deleted);
+      if (liked?.data?.data?.businessId === id) setIsSaved(!liked?.data?.data?.deleted);
       return;
     }
   };
@@ -95,7 +95,7 @@ export default function SavedBusiness({
         <CardContent>
           <Grid container spacing={1}>
             <Grid item xs={0}>
-              <Typography ref={heightRef} variant="h6">
+              <Typography ref={heightRef} variant="h6" sx={{ fontSize: "1rem" }}>
                 {businessName ? businessName : "Name not available"}
               </Typography>
               <p
@@ -157,7 +157,9 @@ export default function SavedBusiness({
               </div>
             </Grid>
             <Grid item xs={12} sx={{ justifyContent: "flex-end", display: "flex" }}>
-              <div title="Edit">{!hidden && <ModeEditOutlineIcon />}</div>
+              <div title="Edit" onClick={() => history.push("/dashboard/my-business/" + id)}>
+                {!hidden && <ModeEditOutlineIcon />}
+              </div>
               <div title="Delete">{!hidden && <DeleteForeverIcon onClick={handleDelete} />}</div>
               <div title="View">
                 <RemoveRedEyeIcon onClick={() => history.push("/businesses/" + id)} />
