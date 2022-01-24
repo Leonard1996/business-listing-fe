@@ -22,7 +22,7 @@ export default function Homepage() {
       <Primary />
       <Secondary />
       <Tertiary />
-      <Slider />
+      <Slider category="Uncategorised" />
     </>
   );
 }

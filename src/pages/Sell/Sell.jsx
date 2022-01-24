@@ -20,7 +20,7 @@ export default function Sell() {
       <Primary />
       <Quote />
       <Tertiary />
-      <Slider />
+      <Slider category="Uncategorised" />
     </>
   );
 }

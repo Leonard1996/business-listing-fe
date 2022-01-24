@@ -2,7 +2,6 @@ import { Grid, Box, TextField, useMediaQuery, Button, Typography } from "@mui/ma
 import Category from "./components/Category";
 import Hero from "../../common/components/Hero/Hero";
 import styles from "./components/Category.module.scss";
-import { inputSx } from "../Authenticate/Authenticate";
 import banner from "../../assets/images/grow.jpeg";
 
 const categories = ["Hot Topics", "Guides", "Business Insights"];

@@ -10,7 +10,7 @@ export default function Category({ title }) {
           {title}
         </Typography>
       </Box>
-      <Slider />
+      <Slider category={title} />
       <Box mt={3} sx={{ textAlign: "center" }}>
         <Button variant="contained" className={styles["card__button"]}>
           <Typography variant="caption">View All</Typography>
