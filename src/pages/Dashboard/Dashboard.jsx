@@ -5,6 +5,7 @@ import PrivateRoute from "../../common/components/PrivateRoute/PrivateRoute";
 import MyDetails from "./components/MyDetails/MyDetails";
 import MyBusiness from "./components/MyBusiness/MyBusiness";
 import SavedBusinessList from "./components/SavedBusinessList/SavedBusinessList";
+import AdminPanel from "./components/AdminPanel/AdminPanel";
 
 export default function Dashboard(props) {
   const [open, setOpen] = React.useState(false);
@@ -33,10 +34,11 @@ export default function Dashboard(props) {
       <Grid item xs={12} sm={6}>
         <PrivateRoute exact path={props.match.url + "/" + "my-details"} component={MyDetails} />
         <PrivateRoute exact path={props.match.url + "/" + "saved-businesses"} component={SavedBusinessList} />
-        <PrivateRoute exact path={props.match.url + "/" + "my-business"} component={MyBusiness} />
+        <PrivateRoute path={props.match.url + "/" + "my-business/:businessId?"} component={MyBusiness} />
+        <PrivateRoute exact path={props.match.url + "/admin-panel"} component={AdminPanel} />
       </Grid>
     </Grid>
   );
 }
 
-const test2 = () => <p>saved</p>;
+// const test2 = () => <p>saved</p>;

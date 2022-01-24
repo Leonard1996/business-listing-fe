@@ -20,6 +20,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Business from "./pages/Business/Business";
 import FilterForm from "./pages/FilterForm/FilterForm";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 const theme = createTheme({
   palette: {
@@ -40,6 +41,7 @@ function App() {
           <Nav />
           <Switch>
             <Route exact path="/" component={Homepage} />
+            <Route exact path="/change-password/:token" component={ResetPassword} />
             <Route path="/evaluation" component={Evaluation} />
             <Route path="/grow" component={Grow} />
             <Route path="/sell" component={Sell} />

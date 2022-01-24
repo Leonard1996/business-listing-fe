@@ -13,8 +13,15 @@ import Dialog from "@mui/material/Dialog";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import { v4 as uuidv4 } from "uuid";
 
-export default function FileUploader({ multiple, handleFileChange, files, setFiles }) {
-  const limit = multiple || 1;
+export default function FileUploader({
+  multiple,
+  handleFileChange,
+  files,
+  setFiles,
+  existingFiles,
+  handleExistingFilesDelete,
+  handleExistingBannerDelete,
+}) {
   const uploadRef = React.useRef(null);
   const isMediumScreen = useMediaQuery("(max-width:850px)");
   const [isOpen, setIsOpen] = React.useState(false);
@@ -25,6 +32,11 @@ export default function FileUploader({ multiple, handleFileChange, files, setFil
   };
 
   const handleImageView = (file) => {
+    if (file.path) {
+      setSource(process.env.REACT_APP_STATIC_SERVER + file.path);
+      setIsOpen(true);
+      return;
+    }
     if (file.type && !file.type.startsWith("image/")) {
       console.log("File is not an image.", file.type, file);
       return;
@@ -57,19 +69,10 @@ export default function FileUploader({ multiple, handleFileChange, files, setFil
               type="file"
               multiple={multiple ? "multiple" : null}
               accept="image/*"
-              onChange={
-                // (e) => {
-                //   const formData = new FormData();
-                //   for (let i = 0; i < e.target.files.length; i++) {
-                //     formData.append("file", e.target.files[i]);
-                //   }
-                // axios.post("http://localhost:4500/attachments/upload", formData, {
-                //   headers: {
-                //     "Content-Type": "multipart/form-data",
-                //   },
-                // });
-                //}
-                handleFileChange
+              onChange={handleFileChange}
+              disabled={
+                (!multiple && (existingFiles?.length || files?.length)) ||
+                (multiple && existingFiles?.length + files?.length > 9)
               }
             />
           </div>
@@ -77,6 +80,32 @@ export default function FileUploader({ multiple, handleFileChange, files, setFil
         <div className={styles["container--separator"]} />
         <div className={multiple ? styles["container__list"] : styles["container__single"]}>
           <List dense={true}>
+            {existingFiles.map((file) => (
+              <ListItem
+                key={file.id}
+                secondaryAction={
+                  <IconButton edge="end" aria-label="delete">
+                    <DeleteIcon
+                      onClick={
+                        !file.isBanner ? () => handleExistingFilesDelete(file.id) : () => handleExistingBannerDelete()
+                      }
+                    />
+                  </IconButton>
+                }
+              >
+                <ListItemAvatar>
+                  <Avatar>
+                    <ImageSearchIcon onClick={() => handleImageView(file)} />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary={file.originalName}
+                  sx={{
+                    width: isMediumScreen ? "100px" : "150px",
+                  }}
+                />
+              </ListItem>
+            ))}
             {files.map((file) => (
               <ListItem
                 key={uuidv4()}

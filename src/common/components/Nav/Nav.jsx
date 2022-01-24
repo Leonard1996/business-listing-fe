@@ -21,6 +21,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import SellIcon from "@mui/icons-material/Sell";
 import TimelineIcon from "@mui/icons-material/Timeline";
+import logo from "../../../assets/images/grow.png";
 //
 
 export default function Nav() {
@@ -48,11 +49,7 @@ export default function Nav() {
     <>
       <AppBar sx={style} elevation={0}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <img
-            src={
-              "https://valhallainvestments.co.uk/wp-content/uploads/2019/09/Valhalla-Investment_Logo-Long_210x100-01.png"
-            }
-          />
+          <img src={logo} width={80} />
           <div>
             <MenuIcon sx={iconStyle} onClick={() => setDrawer(true)} />
           </div>
@@ -93,7 +90,6 @@ const Routes = ({ onClose }) => {
         onClose();
         break;
       case 10:
-        console.log("here");
         history.push("/dashboard");
         onClose();
         break;

@@ -210,6 +210,19 @@ export default function Authentication(props) {
                       Already have an account? Click here to sign up!
                     </Typography>
                   </Box>
+                  <Box mt={0.5}>
+                    <Typography
+                      textAlign="center"
+                      variant="body1"
+                      color="primary"
+                      sx={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => props.history.push("/signin")}
+                    >
+                      Forgot Your password? Click here to reset!
+                    </Typography>
+                  </Box>
                 </form>
               )}
             </CardContent>
