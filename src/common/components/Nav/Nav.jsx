@@ -86,10 +86,6 @@ const Routes = ({ onClose }) => {
         onClose();
         break;
       case 4:
-        history.push("/admin-panel");
-        onClose();
-        break;
-      case 5:
         history.push("/signin");
         onClose();
         break;
@@ -106,14 +102,14 @@ const Routes = ({ onClose }) => {
   return (
     <Box sx={{ width: 250 }} role="presentation">
       <List>
-        {["Home", "Buy Businesses", "Sell your business", "Grow your business", "Admin Panel"].map((text, index) => (
+        {["Home", "Buy Businesses", "Sell your business", "Grow your business"].map((text, index) => (
           <ListItem button key={text} onClick={() => handleClick(index)}>
             <ListItemIcon>{icons[index]}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
         {!accessToken && (
-          <ListItem button onClick={() => handleClick(5)}>
+          <ListItem button onClick={() => handleClick(4)}>
             <ListItemIcon>
               <LoginIcon />
             </ListItemIcon>

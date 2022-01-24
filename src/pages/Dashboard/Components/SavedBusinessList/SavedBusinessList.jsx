@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { Grid, CircularProgress, Box, Tab, Tabs } from "@mui/material";
-import SavedBusiness from "../SavedBusiness/SavedBusiness";
-import { listBusinesses, listLiked } from "../../dashboard.service";
+import { listBusinesses } from "../../dashboard.service";
 import Pagination from "@mui/material/Pagination";
 import ReadOnlyMap from "../../../../common/components/ReadOnlyMap/ReadOnlyMap";
 import { useLocation } from "react-router-dom";
+import SavedBusiness from "../SavedBusiness/SavedBusiness";
+import { AuthContext } from "../../../../context/Auth/Auth";
 
 export default function SavedBusinessList({ hidden, isFilter, setFilterCount, isWithFilter, filterParams, save }) {
   const [businesses, setBusinesses] = React.useState([]);
@@ -13,6 +14,8 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount, is
   const [pageView, setPageView] = React.useState(1);
   const [pageFilter, setPageFilter] = React.useState(1);
   const location = useLocation();
+
+  const { accessToken } = React.useContext(AuthContext);
 
   const filterCount = React.useRef(0);
 
@@ -71,7 +74,7 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount, is
   };
 
   const [view, setView] = React.useState(0);
-  const tabs = ["List", "Grid", "Map", "Save Search"];
+  const tabs = accessToken ? ["List", "Grid", "Map", "Save Search"] : ["List", "Grid", "Map"];
 
   const handleTabChange = (event, newValue) => {
     setView(newValue);
@@ -138,8 +141,8 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount, is
                     asking_price: askingPrice,
                     last_annual_turnover: lastAnnualTurnover,
                     last_annual_profit: lastAnnualProfit,
-                    marker_position_lat: lat,
-                    marker_position_lng: lng,
+                    map_position_lat: lat,
+                    map_position_lng: lng,
                   } = business;
                   return (
                     <React.Fragment key={id}>

@@ -13,12 +13,12 @@ import {
   FormLabel,
 } from "@mui/material";
 import React from "react";
-import SavedBusinessList from "../Dashboard/Components/SavedBusinessList/SavedBusinessList";
 import { items } from "../../common/config/fields";
 import RoleBasedInput from "../../common/components/RoleBasedInput/RoleBasedInput";
 import { inputSx } from "../Authenticate/Authenticate";
 import styles from "../Authenticate/Authenticate.module.scss";
 import useForm from "../../hooks/useForm";
+import SavedBusinessList from "../Dashboard/components/SavedBusinessList/SavedBusinessList";
 
 export default function FilterForm() {
   const isSmallScreen = useMediaQuery("(max-width:600px)");

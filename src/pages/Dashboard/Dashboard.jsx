@@ -1,5 +1,5 @@
 import { Grid, useMediaQuery } from "@mui/material";
-import Menu from "./Components/Menu/Menu";
+import Menu from "./components/Menu/Menu";
 import React from "react";
 import PrivateRoute from "../../common/components/PrivateRoute/PrivateRoute";
 import MyDetails from "./components/MyDetails/MyDetails";
