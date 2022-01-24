@@ -20,11 +20,14 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Business from "./pages/Business/Business";
 import FilterForm from "./pages/FilterForm/FilterForm";
-import { Users } from "./pages/AdminPanel/Users";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 const theme = createTheme({
   palette: {
     warning: {
+      main: '#d4ae36',
+    },
+    secondary: {
       main: '#d4ae36',
     },
   },
@@ -38,6 +41,7 @@ function App() {
           <Nav />
           <Switch>
             <Route exact path="/" component={Homepage} />
+            <Route exact path="/change-password/:token" component={ResetPassword} />
             <Route path="/evaluation" component={Evaluation} />
             <Route path="/grow" component={Grow} />
             <Route path="/sell" component={Sell} />

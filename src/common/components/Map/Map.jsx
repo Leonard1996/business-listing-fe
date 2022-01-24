@@ -28,6 +28,9 @@ class LocationSearchModal extends React.PureComponent {
   };
 
   componentDidMount() {
+    if (this.props.mapState) {
+      this.setState(this.props.mapState);
+    }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.context.setMapState((prevState) => ({

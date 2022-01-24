@@ -1,21 +1,25 @@
-import React from "react";
-import { Grid, CircularProgress, Box } from "@mui/material";
+import React, { useEffect } from "react";
+import { Grid, CircularProgress, Box, Tab, Tabs } from "@mui/material";
 import SavedBusiness from "../SavedBusiness/SavedBusiness";
-import { listBusinesses } from "../../dashboard.service";
+import { listBusinesses, listLiked } from "../../dashboard.service";
 import Pagination from "@mui/material/Pagination";
+import ReadOnlyMap from "../../../../common/components/ReadOnlyMap/ReadOnlyMap";
+import { useLocation } from "react-router-dom";
 
-export default function SavedBusinessList({ hidden, isFilter, setFilterCount, isWithFilter, filterParams }) {
+export default function SavedBusinessList({ hidden, isFilter, setFilterCount, isWithFilter, filterParams, save }) {
   const [businesses, setBusinesses] = React.useState([]);
   const [count, setCount] = React.useState(1);
   const [page, setPage] = React.useState(1);
+  const [pageView, setPageView] = React.useState(1);
   const [pageFilter, setPageFilter] = React.useState(1);
+  const location = useLocation();
 
   const filterCount = React.useRef(0);
 
   const [isLoading, setIsLoading] = React.useState(true);
 
-  const callBusinessesService = async (page, isWithFilter) => {
-    const [businesses, error] = await listBusinesses(page, isFilter, isWithFilter, filterParams);
+  const callBusinessesService = async (page, isWithFilter, isSaved) => {
+    const [businesses, error] = await listBusinesses(page, isFilter, isWithFilter, filterParams, isSaved);
     if (error) {
       setIsLoading(false);
       return;
@@ -35,7 +39,7 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount, is
   };
 
   React.useEffect(() => {
-    if (page && !isWithFilter) {
+    if (page && !isWithFilter && view !== 3) {
       filterCount.current = isWithFilter;
       setPageFilter(1);
       callBusinessesService(page, false);
@@ -43,7 +47,7 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount, is
   }, [page, isWithFilter]);
 
   React.useEffect(() => {
-    if (isWithFilter && (filterCount.current < isWithFilter || pageFilter)) {
+    if (isWithFilter && (filterCount.current < isWithFilter || pageFilter) && view !== 3) {
       filterCount.current = isWithFilter;
       setPage(1);
       callBusinessesService(pageFilter, true);
@@ -58,6 +62,7 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount, is
   };
 
   const handlePageChange = (event, value) => {
+    if (view === 3) setPageView(value);
     if (isWithFilter) {
       setPageFilter(value);
     } else {
@@ -65,84 +70,130 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount, is
     }
   };
 
-  return (
-    <div style={isLoading ? loadingStyle : {}}>
-      {isLoading ? (
-        <CircularProgress color="warning" />
-      ) : (
-        <>
-          <Box paddingTop={2}>
-            {businesses?.length ? (
-              <Pagination
-                sx={{ display: "flex", justifyContent: "center" }}
-                onChange={handlePageChange}
-                count={count}
-                color="warning"
-                page={isWithFilter ? pageFilter : page}
-              />
-            ) : (
-              <div style={{ color: "red" }}>No businesses to display</div>
-            )}
-          </Box>
-          <Grid container sx={{ padding: "0.5rem" }}>
-            {businesses.map((business) => {
-              const {
-                id,
-                path,
-                name_of_business: businessName,
-                asking_price: askingPrice,
-                last_annual_turnover: lastAnnualTurnover,
-                last_annual_profit: lastAnnualProfit,
-              } = business;
+  const [view, setView] = React.useState(0);
+  const tabs = ["List", "Grid", "Map", "Save Search"];
 
-              return (
-                <React.Fragment key={id}>
-                  <Grid item xs={3} sx={5} xl={3} sx={{ marginTop: "0.5rem" }}>
-                    {path ? (
-                      <div
-                        style={{
-                          backgroundImage: `url("${process.env.REACT_APP_STATIC_SERVER + path}")`,
-                          backgroundPosition: "center",
-                          backgroundRepeat: "no-repeat",
-                          backgroundAttachment: "scroll",
-                          height: "200px",
-                          backgroundSize: "cover",
-                        }}
-                      ></div>
-                    ) : (
-                      <div
-                        style={{
-                          backgroundColor: "#aaa",
-                          height: "100%",
-                          width: "100%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <p style={{ transform: "rotate(-45deg)", color: "#ccc", textAlign: "center" }}>
-                          no image available
-                        </p>
-                      </div>
-                    )}
-                  </Grid>
-                  <Grid item xs={9} sx={7} xl={9}>
-                    <SavedBusiness
-                      {...business}
-                      askingPrice={askingPrice}
-                      lastAnnualTurnover={lastAnnualTurnover}
-                      lastAnnualProfit={lastAnnualProfit}
-                      businessName={businessName}
-                      businessService={() => callBusinessesService(page)}
-                      hidden={hidden}
-                    />
-                  </Grid>
-                </React.Fragment>
-              );
-            })}
-          </Grid>
-        </>
-      )}
-    </div>
+  const handleTabChange = (event, newValue) => {
+    setView(newValue);
+  };
+
+  useEffect(() => {
+    if (view === 3) {
+      setPage(1);
+      setPageFilter(1);
+      callBusinessesService();
+      callBusinessesService(pageView, true, true);
+    }
+    if (view !== 3) {
+      setPageView(1);
+      setPageFilter(1);
+      setPage(1);
+      callBusinessesService(1, true, false);
+    }
+  }, [view, pageView]);
+
+  return (
+    <>
+      {location.pathname === "/buy-businesses" ? (
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={view}
+            onChange={handleTabChange}
+            aria-label="basic tabs example"
+            TabIndicatorProps={{ style: { background: "#CFAA43" } }}
+            textColor="secondary"
+          >
+            {tabs.map((tab, _index) => (
+              <Tab label={tab} key={_index} sx={{ fontWeight: _index === view ? "bold" : "normal" }} />
+            ))}
+          </Tabs>
+        </Box>
+      ) : null}
+
+      <div style={isLoading ? loadingStyle : {}}>
+        {isLoading ? (
+          <CircularProgress color="warning" />
+        ) : (
+          <>
+            <Box paddingTop={2}>
+              {businesses?.length ? (
+                <Pagination
+                  sx={{ display: "flex", justifyContent: "center" }}
+                  onChange={handlePageChange}
+                  count={count}
+                  color="warning"
+                  page={isWithFilter ? pageFilter : page}
+                />
+              ) : (
+                <div style={{ color: "red" }}>No businesses to display</div>
+              )}
+            </Box>
+            {(view === 0 || view === 1 || view === 2 || view === 3) && (
+              <Grid container sx={{ padding: "0.5rem" }}>
+                {businesses.map((business) => {
+                  const {
+                    id,
+                    path,
+                    name_of_business: businessName,
+                    asking_price: askingPrice,
+                    last_annual_turnover: lastAnnualTurnover,
+                    last_annual_profit: lastAnnualProfit,
+                    marker_position_lat: lat,
+                    marker_position_lng: lng,
+                  } = business;
+                  return (
+                    <React.Fragment key={id}>
+                      <Grid item xs={3} sx={{ marginTop: "0.5rem" }}>
+                        {view === 2 ? (
+                          <ReadOnlyMap lat={lat} lng={lng} />
+                        ) : path ? (
+                          <div
+                            style={{
+                              backgroundImage: `url("${process.env.REACT_APP_STATIC_SERVER + path}")`,
+                              backgroundPosition: "center",
+                              backgroundRepeat: "no-repeat",
+                              backgroundAttachment: "scroll",
+                              height: "200px",
+                              backgroundSize: "cover",
+                            }}
+                          ></div>
+                        ) : (
+                          <div
+                            style={{
+                              backgroundColor: "#aaa",
+                              height: "100%",
+                              width: "100%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <p style={{ transform: "rotate(-45deg)", color: "#ccc", textAlign: "center" }}>
+                              no image available
+                            </p>
+                          </div>
+                        )}
+                      </Grid>
+                      <Grid item xs={9} md={view === 1 ? 3 : 9}>
+                        <SavedBusiness
+                          {...business}
+                          askingPrice={askingPrice}
+                          lastAnnualTurnover={lastAnnualTurnover}
+                          lastAnnualProfit={lastAnnualProfit}
+                          businessName={businessName}
+                          businessService={() => callBusinessesService(page)}
+                          hidden={hidden}
+                          save={save}
+                        />
+                      </Grid>
+                    </React.Fragment>
+                  );
+                })}
+              </Grid>
+            )}
+          </>
+        )}
+      </div>
+    </>
   );
 }

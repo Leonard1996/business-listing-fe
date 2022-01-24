@@ -90,6 +90,7 @@ export default function FilterForm() {
               setFilterCount={setCount}
               isWithFilter={isWithFilter}
               filterParams={filterParams}
+              save={true}
             />
           </Box>
         </Grid>

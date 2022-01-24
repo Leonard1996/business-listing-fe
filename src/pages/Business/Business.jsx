@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Grid, Typography, useMediaQuery, TextField } from "@mui/material";
 import Hero from "../../common/components/Hero/Hero";
-import { getBusiness, insertMessage } from "./business.service";
+import { getBusiness, insertMessage, getSimilarBusiness } from "./business.service";
 import { Box } from "@mui/system";
 import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
 import styles from "./Business.module.scss";
@@ -22,8 +22,10 @@ import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
 import banner from "../../assets/images/businesses.jpeg";
-
+import SimilarBusiness from "./SimilarBusiness";
+import { useParams } from "react-router-dom";
 export default function Business(props) {
+  const params = useParams();
   const homepageStyles = {
     display: "flex",
     justifyContent: "flex-start",
@@ -31,6 +33,7 @@ export default function Business(props) {
   };
 
   let timerId;
+  const [similarBusinesses, setSimilarBusinesses] = React.useState([]);
   const [business, setBusiness] = React.useState({});
   const [message, setMessage] = React.useState({
     disabled: false,
@@ -53,10 +56,23 @@ export default function Business(props) {
     }
   };
 
+  const fetchSimilarBusiness = async (industry, id) => {
+    const [result, error] = await getSimilarBusiness(industry, id);
+    if (!error) {
+      setSimilarBusinesses([...result.data.data]);
+    } else {
+      props.history.push("/");
+    }
+  };
+
   React.useEffect(() => {
     fetchBusiness(props.match.params.businessId);
     return () => clearInterval(timerId);
   }, []);
+
+  React.useEffect(() => {
+    if (business && business.industry) fetchSimilarBusiness(business.industry, props.match.params.businessId);
+  }, [business]);
 
   const replacer = (entry, isCurrency) => {
     if (+entry > -1 && isCurrency) return "$ " + entry;
@@ -67,11 +83,12 @@ export default function Business(props) {
   const handleSubmit = async (event) => {
     setMessage({ disabled: true, innerText: "CONTACT SELLER" });
     event.preventDefault();
-    const [message, error] = await insertMessage(business?.id, {
+    const [message, error] = await insertMessage(params.businessId, {
       name: nameRef.current.value,
       email: emailRef.current.value,
       subject: subjectRef.current.value,
       message: messageRef.current.value,
+      businessId: params.businessId,
     });
     if (!error) {
       setMessage({ disabled: true, innerText: "MESSAGE SENT" });
@@ -326,7 +343,7 @@ export default function Business(props) {
                 </div>
                 <div style={{ width: "150px" }}>
                   <Typography variant="overline">City</Typography>
-                  <Typography variant="h6">{replacer(business.city)}</Typography>
+                  <Typography variant="h6">{replacer(business.city === "" ? business.area : business.city)}</Typography>
                 </div>
               </Grid>
             )}
@@ -425,11 +442,28 @@ export default function Business(props) {
           <ReadOnlyMap lat={business?.mapPositionLat} lng={business?.mapPositionLng} />
         </Grid>
         <Grid item xs={12}>
-          <Box m={6} sx={{ textAlign: "center" }}>
-            <Typography sx={{ color: "#D4AE36" }} variant="h4">
-              Similar businesses for sale
-            </Typography>
-          </Box>
+          <Grid container>
+            <Grid item xs={12}>
+              <Box m={6} sx={{ textAlign: "center" }}>
+                <Typography sx={{ color: "#D4AE36" }} variant="h4">
+                  Similar businesses for sale
+                </Typography>
+              </Box>
+            </Grid>
+            {similarBusinesses?.map((business) => (
+              <>
+                <Grid item xs={12} md={4}>
+                  <SimilarBusiness
+                    title={business.title}
+                    key={business.id}
+                    id={business.id}
+                    askingPrice={business.askingPrice}
+                    city={business.city}
+                  />
+                </Grid>
+              </>
+            ))}
+          </Grid>
         </Grid>
         <Grid item xs={12} sm={6} sx={{ backgroundColor: "black", padding: "3rem" }}>
           <Grid container>
