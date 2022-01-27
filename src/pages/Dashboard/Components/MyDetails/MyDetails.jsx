@@ -57,12 +57,13 @@ export default function MyDetails(props) {
   };
 
   useEffect(() => {
-    caches.keys().then((names) => {
-      names.forEach((name) => {
-        caches.delete(name);
-      });
-      fetchProfile();
-    });
+    // caches.keys().then((names) => {
+    //   names.forEach((name) => {
+    //     caches.delete(name);
+    //   });
+
+    // });
+    fetchProfile();
     //fetchProfile();
   }, []);
 
