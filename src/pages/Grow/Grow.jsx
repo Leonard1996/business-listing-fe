@@ -3,6 +3,7 @@ import Category from "./components/Category";
 import Hero from "../../common/components/Hero/Hero";
 import styles from "./components/Category.module.scss";
 import banner from "../../assets/images/grow.jpeg";
+import React from "react";
 
 const categories = ["Hot Topics", "Guides", "Business Insights"];
 const homepageStyles = {
@@ -12,6 +13,14 @@ const homepageStyles = {
 };
 
 export default function Grow() {
+  const searchRef = React.useRef(null);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const query = searchRef.current.value.trim().split(" ").join("+");
+    window.open("https://valhallainvestments.co.uk/?s=" + query, "_blank");
+  };
+
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   return (
     <>
@@ -20,11 +29,12 @@ export default function Grow() {
       </Hero>
       <Grid container sx={{ margin: "3rem auto" }}>
         <Grid item xs={12}>
-          <form>
+          <form onSubmit={handleSubmit}>
             <Box marginBottom={2} sx={{ textAlign: isSmallScreen ? "center" : "right", padding: "0 2rem" }}>
               <TextField
                 size="small"
                 placeholder="Search"
+                inputRef={searchRef}
                 sx={{
                   "& label.Mui-focused": {
                     color: "black",

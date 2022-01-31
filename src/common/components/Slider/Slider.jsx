@@ -29,10 +29,11 @@ export const responsive = {
 export default function Slider({ category }) {
   const [posts, setPosts] = useState([]);
   const categoryIdMap = {
-    Buy: 65,
-    "Hot Topics": 1000,
-    Guides: 66,
-    "Business Insights": 67,
+    Buy: 1,
+    // Buy: 65,
+    "Hot Topics": 1,
+    Guides: 1,
+    "Business Insights": 1,
     Uncategorised: 1,
   };
 

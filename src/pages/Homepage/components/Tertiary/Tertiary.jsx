@@ -2,10 +2,12 @@ import { Typography, Grid, Box, Button, TextField, useMediaQuery } from "@mui/ma
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import styles from "./Tertiary.module.scss";
+import React from "react";
 
 export default function Tertiary() {
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   const emailRef = useRef(null);
+  const searchRef = React.useRef(null);
   const [buttonState, setButtonState] = useState({
     loading: false,
     text: "Join",
@@ -37,6 +39,12 @@ export default function Tertiary() {
   useEffect(() => {
     return () => clearTimeout(timerId);
   });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const query = searchRef.current.value.trim().split(" ").join("+");
+    window.open("https://valhallainvestments.co.uk/?s=" + query, "_blank");
+  };
 
   return (
     <Grid container>
@@ -101,10 +109,11 @@ export default function Tertiary() {
       </Grid>
       <Grid item xs={12}>
         <Box marginTop={3} marginBottom={5} sx={{ textAlign: isSmallScreen ? "center" : "right", padding: "0 2rem" }}>
-          <form>
+          <form onSubmit={handleSubmit}>
             <TextField
               size="small"
               placeholder="Search"
+              inputRef={searchRef}
               sx={{
                 "& label.Mui-focused": {
                   color: "black",

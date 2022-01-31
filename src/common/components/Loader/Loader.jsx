@@ -4,8 +4,11 @@ import Zoom from "@mui/material/Zoom";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import React from "react";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
 
-export default function Loader({ loading, success, error, handleClose, open }) {
+export default function Loader({ loading, success, error, handleClose, open, redirect }) {
+  const history = useHistory();
   React.useEffect(() => {
     let id = null;
     if (success || error) {

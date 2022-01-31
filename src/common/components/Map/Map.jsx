@@ -27,6 +27,15 @@ class LocationSearchModal extends React.PureComponent {
     },
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.mapPosition?.lat !== this.props.mapState?.mapPosition?.lat ||
+      prevProps.mapPosition?.lng !== this.props.mapState?.mapPosition?.lng
+    ) {
+      this.setState(this.props.mapState);
+    }
+  }
+
   componentDidMount() {
     if (this.props.mapState) {
       this.setState(this.props.mapState);

@@ -8,6 +8,9 @@ import logo from "../../../assets/images/grow.png";
 import { useHistory } from "react-router-dom";
 
 export default function Footer() {
+  const handleClick = (link) => {
+    window.open(link, "_blank");
+  };
   const history = useHistory();
   return (
     <div className={styles["container"]}>
@@ -41,17 +44,29 @@ export default function Footer() {
             </Typography>
           </p>
           <p>
-            <Typography variant="body1" sx={{ fontWeight: "light", color: "white" }}>
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: "light", color: "white" }}
+              onClick={() => handleClick("https://valhallainvestments.co.uk/about-us/")}
+            >
               About Us
             </Typography>
           </p>
           <p>
-            <Typography variant="body1" sx={{ fontWeight: "light", color: "white" }}>
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: "light", color: "white" }}
+              onClick={() => handleClick("https://valhallainvestments.co.uk/contact/")}
+            >
               Contact Us
             </Typography>
           </p>
           <p>
-            <Typography variant="body1" sx={{ fontWeight: "light", color: "white" }}>
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: "light", color: "white" }}
+              onClick={() => handleClick("https://valhallainvestments.co.uk/about-us/")}
+            >
               FAQs
             </Typography>
           </p>

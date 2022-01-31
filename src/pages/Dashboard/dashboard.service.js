@@ -109,5 +109,24 @@ export const deleteAttachment = async (attachmentId, businessId) => {
   }
 }
 
+export const fetchUserById = async (id) => {
+  try {
+    const me = await axiosApiInstance.get(process.env.REACT_APP_API + "/users/" + id);
+    return [me, null];
+  } catch (error) {
+    return [null, JSON.stringify(error)];
+  }
+};
+
+
+export const changeUser = async (inputs, id) => {
+  try {
+    const me = await axiosApiInstance.patch(process.env.REACT_APP_API + "/users/" + id, inputs);
+    return [me, null];
+  } catch (error) {
+    return [null, JSON.stringify(error)];
+  }
+};
+
 
 
