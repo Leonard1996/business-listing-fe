@@ -15,7 +15,7 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount, is
   const [pageFilter, setPageFilter] = React.useState(1);
   const location = useLocation();
 
-  const { accessToken } = React.useContext(AuthContext);
+  const { accessToken, setOpenDrawer } = React.useContext(AuthContext);
 
   const filterCount = React.useRef(0);
 
@@ -74,9 +74,13 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount, is
   };
 
   const [view, setView] = React.useState(0);
-  const tabs = accessToken ? ["List", "Grid", "Map", "Save Search"] : ["List", "Grid", "Map"];
+  const tabs = ["List", "Grid", "Map", "Save Search"];
 
   const handleTabChange = (event, newValue) => {
+    if (!accessToken && newValue === 3) {
+      setOpenDrawer(true);
+      return;
+    }
     setView(newValue);
   };
 
@@ -131,7 +135,7 @@ export default function SavedBusinessList({ hidden, isFilter, setFilterCount, is
                 <div style={{ color: "red" }}>No businesses to display</div>
               )}
             </Box>
-            {(view === 0 || view === 1 || view === 2 || view === 3) && (
+            {(view === 0 || view === 1 || view === 2 || (view === 3 && accessToken)) && (
               <Grid container sx={{ padding: "0.5rem" }}>
                 {businesses.map((business) => {
                   const {

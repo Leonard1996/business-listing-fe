@@ -6,6 +6,7 @@ import Slider from "../../common/components/Slider/Slider";
 import { Box, Button, Typography } from "@mui/material";
 import styles from "./components/Primary/Primary.module.scss";
 import banner from "../../assets/images/homepage.jpeg";
+import { useHistory } from "react-router-dom";
 
 const homepageStyles = {
   display: "flex",
@@ -28,6 +29,7 @@ export default function Homepage() {
 }
 
 const BannerContent = () => {
+  const history = useHistory();
   return (
     <div>
       <Box p={3}>
@@ -56,7 +58,7 @@ const BannerContent = () => {
           for FREE
         </Typography>
         <Box sx={{ textAlign: "center" }} marginY={1}>
-          <Button variant="contained" className={styles["card__button"]}>
+          <Button variant="contained" className={styles["card__button"]} onClick={() => history.push("/sell")}>
             <Typography variant="caption">Sell for free</Typography>
           </Button>
         </Box>

@@ -1,8 +1,10 @@
 import { Typography, Grid, Card, CardContent, Box, Button } from "@mui/material";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import styles from "./Secondary.module.scss";
+import { useHistory } from "react-router-dom";
 
 export default function Secondary() {
+  const history = useHistory();
   return (
     <Grid container>
       <Grid item xs={12} sx={{ backgroundColor: "#D4AE36" }}>
@@ -72,7 +74,11 @@ export default function Secondary() {
                   </Typography>
                 </Box>
                 <Box mt={3} sx={{ textAlign: "center" }}>
-                  <Button variant="contained" className={styles["card__button"]}>
+                  <Button
+                    variant="contained"
+                    className={styles["card__button"]}
+                    onClick={() => history.push("/signup")}
+                  >
                     <Typography variant="caption">Start now</Typography>
                   </Button>
                 </Box>

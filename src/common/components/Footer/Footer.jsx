@@ -5,12 +5,14 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import logo from "../../../assets/images/grow.png";
+import { useHistory } from "react-router-dom";
 
 export default function Footer() {
+  const history = useHistory();
   return (
     <div className={styles["container"]}>
       <div className={styles["container__logo"]}>
-        <img src={logo} height={80} />
+        <img src={logo} height={80} style={{ cursor: "pointer" }} onClick={() => history.push("/")} />
       </div>
 
       <div className={styles["container__categories"]}>
@@ -18,22 +20,22 @@ export default function Footer() {
           <Typography variant="h6" sx={{ fontWeight: "bold", color: "#d4ae36" }}>
             Explore
           </Typography>
-          <p>
+          <p onClick={() => history.push("/evaluation")}>
             <Typography variant="body1" sx={{ fontWeight: "light", color: "white" }}>
               FREE Evaluation
             </Typography>
           </p>
-          <p>
+          <p onClick={() => history.push("/buy-businesses")}>
             <Typography variant="body1" sx={{ fontWeight: "light", color: "white" }}>
               Buy
             </Typography>
           </p>
-          <p>
+          <p onClick={() => history.push("/grow")}>
             <Typography variant="body1" sx={{ fontWeight: "light", color: "white" }}>
               Grow
             </Typography>
           </p>
-          <p>
+          <p onClick={() => history.push("/sell")}>
             <Typography variant="body1" sx={{ fontWeight: "light", color: "white" }}>
               Sell
             </Typography>

@@ -37,6 +37,7 @@ export default function FilterForm() {
   };
 
   const handleSubmit = (event) => {
+    window.scrollTo(0, 0);
     event.preventDefault();
     const tsCreated = checkboxes.findIndex((label) => label);
     setFilterParams({ ...state, ...(tsCreated > -1 && { tsCreated: dateValues[tsCreated] }) });

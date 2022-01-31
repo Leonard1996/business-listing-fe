@@ -51,11 +51,6 @@ const BannerContent = () => {
         >
           FREE
         </Typography>
-        <Box marginY={1}>
-          <Button variant="contained" className={styles["card__button"]}>
-            <Typography variant="caption">Sell for free</Typography>
-          </Button>
-        </Box>
       </Box>
     </div>
   );

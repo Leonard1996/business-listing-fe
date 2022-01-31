@@ -3,8 +3,10 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import styles from "./Primary.module.scss";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
+import { useHistory } from "react-router-dom";
 
 export default function Primary() {
+  const history = useHistory();
   return (
     <Grid container>
       <Grid item xs={12} sx={{ backgroundColor: "#D4AE36" }}>
@@ -29,7 +31,10 @@ export default function Primary() {
               <Grid item xs={12} md={4}>
                 <div className={styles["card-container"]}>
                   <div className={styles["icon-container"]}>
-                    <AddShoppingCartIcon sx={{ transform: "scale(3.5)" }} />
+                    <AddShoppingCartIcon
+                      sx={{ transform: "scale(3.5)", cursor: "pointer" }}
+                      onClick={() => history.push("/buy-businesses")}
+                    />
                   </div>
                   <Typography color="#D4AE36" variant="h6" textAlign="center">
                     BUY
@@ -46,7 +51,10 @@ export default function Primary() {
               <Grid item xs={12} md={4}>
                 <div className={styles["card-container"]}>
                   <div className={styles["icon-container"]}>
-                    <TrendingUpIcon sx={{ transform: "scale(3.5)" }} />
+                    <TrendingUpIcon
+                      sx={{ transform: "scale(3.5)", cursor: "pointer" }}
+                      onClick={() => history.push("/grow")}
+                    />
                   </div>
                   <Typography color="#D4AE36" variant="h6" textAlign="center">
                     GROW
@@ -63,7 +71,10 @@ export default function Primary() {
               <Grid item xs={12} md={4}>
                 <div className={styles["card-container"]}>
                   <div className={styles["icon-container"]}>
-                    <LocalAtmIcon sx={{ transform: "scale(3.5)" }} />
+                    <LocalAtmIcon
+                      sx={{ transform: "scale(3.5)", cursor: "pointer" }}
+                      onClick={() => history.push("/sell")}
+                    />
                   </div>
                   <Typography color="#D4AE36" variant="h6" textAlign="center">
                     SELL
@@ -106,7 +117,7 @@ export default function Primary() {
               Nothing, Nada... Zip!
             </Typography>
             <Box mt={3} sx={{ textAlign: "center" }}>
-              <Button variant="contained" className={styles["card__button"]}>
+              <Button variant="contained" className={styles["card__button"]} onClick={() => history.push("/sell")}>
                 <Typography variant="caption">Sell for free</Typography>
               </Button>
             </Box>

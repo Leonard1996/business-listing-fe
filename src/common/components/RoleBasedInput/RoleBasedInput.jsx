@@ -7,7 +7,6 @@ export default function RoleBasedInput({ view, filter, children, mode, all }) {
       if (mode === "view") return view.includes(role);
       return mode === "filter" && filter.includes(role);
     } catch (error) {
-      console.log(error);
       if (mode === "view") return view.includes("viewer");
       return mode === "filter" && filter.includes("viewer");
     }

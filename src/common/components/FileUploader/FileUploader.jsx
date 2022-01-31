@@ -38,7 +38,7 @@ export default function FileUploader({
       return;
     }
     if (file.type && !file.type.startsWith("image/")) {
-      console.log("File is not an image.", file.type, file);
+      // console.log("File is not an image.", file.type, file);
       return;
     }
 

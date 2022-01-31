@@ -5,9 +5,11 @@ import LightbulbIcon from "@mui/icons-material/Lightbulb";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import shine from "../../../../assets/images/shine.svg";
+import { useHistory } from "react-router-dom";
 
 export default function Primary() {
   const isSmallScreen = useMediaQuery("(max-width:600px)");
+  const history = useHistory();
 
   return (
     <Grid container>
@@ -109,7 +111,7 @@ export default function Primary() {
               Nothing, Nada... Zip!
             </Typography>
             <Box mt={3} sx={{ textAlign: "center" }}>
-              <Button variant="contained" className={styles["card__button"]}>
+              <Button variant="contained" className={styles["card__button"]} onClick={() => history.push("/signup")}>
                 <Typography variant="caption">Sell for free</Typography>
               </Button>
             </Box>

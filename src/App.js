@@ -21,6 +21,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Business from "./pages/Business/Business";
 import FilterForm from "./pages/FilterForm/FilterForm";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import ScrollToTop from "./common/components/ScrollToTop/ScrollToTop";
 
 const theme = createTheme({
   palette: {
@@ -38,6 +39,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <AuthProvider>
         <Router>
+          <ScrollToTop />
           <Nav />
           <Switch>
             <Route exact path="/" component={Homepage} />

@@ -95,7 +95,12 @@ export default function SavedBusiness({
         <CardContent>
           <Grid container spacing={1}>
             <Grid item xs={0}>
-              <Typography ref={heightRef} variant="h6" sx={{ fontSize: "1rem" }}>
+              <Typography
+                ref={heightRef}
+                variant="h6"
+                sx={{ fontSize: "1rem" }}
+                onClick={() => history.push("/businesses/" + id)}
+              >
                 {businessName ? businessName : "Name not available"}
               </Typography>
               <p
@@ -119,7 +124,7 @@ export default function SavedBusiness({
                 </Typography>
 
                 <Typography variant="caption" sx={{ fontWeight: "bold" }} component="span">
-                  {askingPrice && +askingPrice >= 0 ? "$ " + askingPrice : "N/A"}
+                  {askingPrice && +askingPrice >= 0 ? "£ " + askingPrice : "N/A"}
                 </Typography>
               </div>
               {/* TURNOVER */}
@@ -129,7 +134,7 @@ export default function SavedBusiness({
                 </Typography>
 
                 <Typography variant="caption" sx={{ fontWeight: "bold" }} component="span">
-                  {lastAnnualTurnover && +lastAnnualTurnover >= 0 ? "$ " + lastAnnualTurnover : "N/A"}
+                  {lastAnnualTurnover && +lastAnnualTurnover >= 0 ? "£ " + lastAnnualTurnover : "N/A"}
                 </Typography>
               </div>
               {/* PROFIT */}
@@ -139,7 +144,7 @@ export default function SavedBusiness({
                 </Typography>
 
                 <Typography variant="caption" sx={{ fontWeight: "bold" }} component="span">
-                  {lastAnnualProfit && +lastAnnualProfit >= 0 ? "$ " + lastAnnualProfit : "N/A"}
+                  {lastAnnualProfit && +lastAnnualProfit >= 0 ? "£ " + lastAnnualProfit : "N/A"}
                 </Typography>
               </div>
               {/* INDUSTRY TYPE */}

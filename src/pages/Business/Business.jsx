@@ -75,7 +75,7 @@ export default function Business(props) {
   }, [business]);
 
   const replacer = (entry, isCurrency) => {
-    if (+entry > -1 && isCurrency) return "$ " + entry;
+    if (+entry > -1 && isCurrency) return "£ " + entry;
     if (entry) return entry;
     return "N/A";
   };
@@ -101,6 +101,11 @@ export default function Business(props) {
         setMessage({ disabled: false, innerText: "CONTACT SELLER" });
       }, 2000);
     }
+  };
+
+  const handleLearnMoreClick = () => {
+    console.log("here123");
+    window.open("https://valhallainvestments.co.uk/news/", "_blank").focus();
   };
 
   return (
@@ -431,7 +436,14 @@ export default function Business(props) {
             </Grid>
             <Grid item xs={12} md={3}>
               <Box p={4}>
-                <Button color="warning" sx={{ backgroundColor: "white" }} variant="contained">
+                <Button
+                  color="warning"
+                  sx={{ backgroundColor: "white" }}
+                  variant="contained"
+                  onClick={() => {
+                    window.location.href = "mailto:info@valhallainvestments.co.uk";
+                  }}
+                >
                   <Typography sx={{ color: "#D4AE36", fontSize: "0.75rem" }}>Get in touch</Typography>
                 </Button>
               </Box>
@@ -508,7 +520,7 @@ export default function Business(props) {
             {isSmallScreen && (
               <Grid item xs={12}>
                 <Box paddingY={1}>
-                  <Button variant="contained" className={styles["card__button"]}>
+                  <Button variant="contained" className={styles["card__button"]} onClick={handleLearnMoreClick}>
                     <Typography variant="caption">Learn More</Typography>
                   </Button>
                 </Box>
@@ -614,7 +626,7 @@ export default function Business(props) {
           <>
             <Grid item xs={6} sx={{ paddingX: "3rem", backgroundColor: "black" }}>
               <Box paddingY={3}>
-                <Button variant="contained" className={styles["card__button"]}>
+                <Button variant="contained" className={styles["card__button"]} onClick={handleLearnMoreClick}>
                   <Typography variant="caption">Learn More</Typography>
                 </Button>
               </Box>
@@ -634,11 +646,7 @@ export default function Business(props) {
           </>
         )}
 
-        {!isSmallScreen && (
-          <Grid item xs={12}>
-            <Box m={4}></Box>
-          </Grid>
-        )}
+        {!isSmallScreen && <Grid item xs={12}></Grid>}
       </Grid>
     </>
   );

@@ -112,7 +112,7 @@ export default function Authentication(props) {
 
   return (
     <>
-      <Grid container justifyContent="center" alignItems="center" sx={{ margin: "100px auto", padding: "16px" }}>
+      <Grid container justifyContent="center" alignItems="center" sx={{ margin: "150px auto", padding: "16px" }}>
         <Grid item xs={12} sm={8} md={5}>
           <Card elevation={3}>
             <CardContent>
@@ -208,19 +208,6 @@ export default function Authentication(props) {
                       onClick={() => props.history.push("/signin")}
                     >
                       Already have an account? Click here to sign up!
-                    </Typography>
-                  </Box>
-                  <Box mt={0.5}>
-                    <Typography
-                      textAlign="center"
-                      variant="body1"
-                      color="primary"
-                      sx={{
-                        cursor: "pointer",
-                      }}
-                      onClick={() => props.history.push("/signin")}
-                    >
-                      Forgot Your password? Click here to reset!
                     </Typography>
                   </Box>
                 </form>

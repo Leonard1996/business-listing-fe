@@ -1,11 +1,12 @@
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useScrollTrigger, Drawer, breadcrumbsClasses } from "@mui/material";
+import { useScrollTrigger, Drawer } from "@mui/material";
 import React, { useContext } from "react";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AssessmentIcon from "@mui/icons-material/Assessment";
 //
 
 import Box from "@mui/material/Box";
@@ -24,7 +25,7 @@ import TimelineIcon from "@mui/icons-material/Timeline";
 import logo from "../../../assets/images/grow.png";
 //
 
-export default function Nav() {
+export default function Nav(props) {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
@@ -44,19 +45,33 @@ export default function Nav() {
   };
 
   const [drawer, setDrawer] = React.useState(false);
+  const { openDrawer, setOpenDrawer } = React.useContext(AuthContext);
+  const history = useHistory();
 
   return (
     <>
       <AppBar sx={style} elevation={0}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <img src={logo} width={80} />
+          <img src={logo} width={80} style={{ cursor: "pointer" }} onClick={() => history.push("/")} />
           <div>
             <MenuIcon sx={iconStyle} onClick={() => setDrawer(true)} />
           </div>
         </Toolbar>
       </AppBar>
-      <Drawer open={drawer} onClose={() => setDrawer(false)} anchor="right">
-        <Routes onClose={() => setDrawer(false)} />
+      <Drawer
+        open={drawer || openDrawer}
+        onClose={() => {
+          setDrawer(false);
+          setOpenDrawer(false);
+        }}
+        anchor="right"
+      >
+        <Routes
+          onClose={() => {
+            setDrawer(false);
+            setOpenDrawer(false);
+          }}
+        />
       </Drawer>
     </>
   );
@@ -64,7 +79,7 @@ export default function Nav() {
 
 const Routes = ({ onClose }) => {
   const { accessToken } = useContext(AuthContext);
-  const icons = [<HomeIcon />, <AddBusinessIcon />, <SellIcon />, <TimelineIcon />];
+  const icons = [<HomeIcon />, <AddBusinessIcon />, <SellIcon />, <TimelineIcon />, <AssessmentIcon />];
 
   const history = useHistory();
   const handleClick = (index) => {
@@ -86,6 +101,10 @@ const Routes = ({ onClose }) => {
         onClose();
         break;
       case 4:
+        history.push("/evaluation");
+        onClose();
+        break;
+      case 5:
         history.push("/signin");
         onClose();
         break;
@@ -102,14 +121,16 @@ const Routes = ({ onClose }) => {
   return (
     <Box sx={{ width: 250 }} role="presentation">
       <List>
-        {["Home", "Buy Businesses", "Sell your business", "Grow your business"].map((text, index) => (
-          <ListItem button key={text} onClick={() => handleClick(index)}>
-            <ListItemIcon>{icons[index]}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {["Home", "Buy Businesses", "Sell your business", "Grow your business", "Free evaluation"].map(
+          (text, index) => (
+            <ListItem button key={text} onClick={() => handleClick(index)}>
+              <ListItemIcon>{icons[index]}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          )
+        )}
         {!accessToken && (
-          <ListItem button onClick={() => handleClick(4)}>
+          <ListItem button onClick={() => handleClick(5)}>
             <ListItemIcon>
               <LoginIcon />
             </ListItemIcon>

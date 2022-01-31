@@ -60,7 +60,6 @@ class LocationSearchModal extends React.PureComponent {
           () => {
             Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then(
               (response) => {
-                console.log(response);
                 const address = response.results[0].formatted_address,
                   addressArray = response.results[0].address_components,
                   city = this.getCity(addressArray),

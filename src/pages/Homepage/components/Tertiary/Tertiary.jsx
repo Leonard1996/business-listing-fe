@@ -1,8 +1,42 @@
 import { Typography, Grid, Box, Button, TextField, useMediaQuery } from "@mui/material";
+import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Tertiary.module.scss";
 
 export default function Tertiary() {
   const isSmallScreen = useMediaQuery("(max-width:600px)");
+  const emailRef = useRef(null);
+  const [buttonState, setButtonState] = useState({
+    loading: false,
+    text: "Join",
+  });
+  let timerId = null;
+
+  const handleJoinClick = async () => {
+    setButtonState({
+      loading: true,
+      text: "Submitting Email...",
+    });
+    try {
+      await axios.post(process.env.REACT_APP_API + "/emails", { email: emailRef.current.value });
+      setButtonState({
+        loading: false,
+        text: "Success",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    timerId = setTimeout(() => {
+      setButtonState({
+        loading: false,
+        text: "Join",
+      });
+    }, 2000);
+  };
+
+  useEffect(() => {
+    return () => clearTimeout(timerId);
+  });
 
   return (
     <Grid container>
@@ -33,6 +67,7 @@ export default function Tertiary() {
             label="Email adress"
             variant="outlined"
             size="small"
+            inputRef={emailRef}
             sx={{
               "& label.Mui-focused": {
                 color: "#d4ae36",
@@ -54,8 +89,13 @@ export default function Tertiary() {
             }}
           />
 
-          <Button variant="contained" className={styles["card__button"]}>
-            <Typography variant="caption">Join</Typography>
+          <Button
+            variant="contained"
+            className={styles["card__button"]}
+            onClick={handleJoinClick}
+            disabled={buttonState.loading}
+          >
+            <Typography variant="caption">{buttonState.text}</Typography>
           </Button>
         </Box>
       </Grid>

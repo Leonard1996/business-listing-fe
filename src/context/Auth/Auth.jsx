@@ -33,8 +33,12 @@ export default function AuthProvider({ children }) {
     },
   });
 
+  const [openDrawer, setOpenDrawer] = useState(false);
+
   return (
-    <AuthContext.Provider value={{ accessToken: parseLocalStorage(), setToken, mapState, setMapState }}>
+    <AuthContext.Provider
+      value={{ accessToken: parseLocalStorage(), setToken, mapState, setMapState, openDrawer, setOpenDrawer }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -9,11 +9,11 @@ import axios from "axios";
 // const posts = new Array(5).fill(true);
 export const responsive = {
   superLargeDesktop: {
-    breakpoint: { max: 4000, min: 3000 },
-    items: 5,
+    breakpoint: { max: 4000, min: 1700 },
+    items: 6,
   },
   desktop: {
-    breakpoint: { max: 3000, min: 1024 },
+    breakpoint: { max: 1700, min: 1024 },
     items: 4,
   },
   tablet: {

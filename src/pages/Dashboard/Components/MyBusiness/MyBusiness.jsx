@@ -178,10 +178,13 @@ export default function MyBusiness(props) {
     success: false,
     error: true,
   });
+  const [published, setPublished] = useState(false);
 
   const handleClose = () => {
     setLoader((prevLoader) => ({ ...prevLoader, open: false }));
   };
+
+  let timerId;
 
   const handleSubmit = async (event) => {
     // event.preventDefault();
@@ -220,7 +223,15 @@ export default function MyBusiness(props) {
       success: businessId ? "You business has been updated" : "Your business has been saved",
       error: false,
     });
+
+    timerId = setTimeout(() => {
+      props.history.push("/dashboard");
+    }, 2100);
   };
+
+  useEffect(() => {
+    return () => clearTimeout(timerId);
+  }, []);
 
   const handleExistingFilesDelete = async (id) => {
     const [result, error] = await deleteAttachment(id, businessId);
@@ -229,7 +240,6 @@ export default function MyBusiness(props) {
       setExistingFiles(files);
       return;
     }
-    console.log(error);
   };
 
   const handleExistingBannerDelete = async () => {
@@ -238,7 +248,6 @@ export default function MyBusiness(props) {
       setExistingBanner([]);
       return;
     }
-    console.log(error);
   };
 
   return (
@@ -361,7 +370,7 @@ export default function MyBusiness(props) {
                             sx={{ inputSx }}
                             startAdornment={
                               <InputAdornment color="warning" position="start">
-                                $
+                                £
                               </InputAdornment>
                             }
                             label={item.label}

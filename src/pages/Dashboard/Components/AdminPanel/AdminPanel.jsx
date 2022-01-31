@@ -43,9 +43,7 @@ const UsersTableContainer = () => {
         ...prevState,
         open: true,
       }));
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
     setLoading(false);
   };
 
@@ -58,9 +56,7 @@ const UsersTableContainer = () => {
         open: true,
       }));
       fetchUsers();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
     setLoading(false);
   };
 

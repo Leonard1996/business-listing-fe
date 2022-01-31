@@ -13,7 +13,6 @@ export default function PostCard({ link, title, excerpt, category, media }) {
   React.useEffect(() => {
     if (media) {
       axios.get(media).then((resp) => {
-        console.log(resp.data);
         setUrl(resp.data?.media_details?.sizes?.medium?.source_url);
       });
     }
@@ -40,7 +39,7 @@ export default function PostCard({ link, title, excerpt, category, media }) {
           </Grid>
           <Grid item xs={12}>
             <Box p={2}>
-              <Typography textAlign="center" sx={{ fontWeight: "bold", color: "#d4ae36" }}>
+              <Typography textAlign="center" sx={{ fontWeight: "bold", color: "#d4ae36", cursor: "pointer" }}>
                 {/* RESTRUCTURING POST-COV- ID? MAKE SURE YOU GET IT RIGHT */}
                 <p
                   style={{
@@ -52,6 +51,7 @@ export default function PostCard({ link, title, excerpt, category, media }) {
                     fontSize: "1rem",
                     margin: 0,
                   }}
+                  onClick={handleClick}
                 >
                   {title}
                 </p>
